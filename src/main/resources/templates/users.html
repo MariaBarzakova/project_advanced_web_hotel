@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Users</title>
+</head>
+<body>
+<table class="styled-table">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Username</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Phone Number</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Passport</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Created at</th>
+    <th>Updated on</th>
+    <th>Change role</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.id}"></td>
+    <td th:text="${user.username}"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.firstName))) ? 'no first name' : user.firstName}"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.lastName))) ? 'no last name' : user.lastName}"></td>
+    <td th:text="${#strings.isEmpty(user.phoneNumber) ? 'no phone number' : user.phoneNumber}"></td>
+    <td th:text="${user.email}"></td>
+    <td th:text="${#strings.isEmpty(user.address) ? 'no address' : user.address}"></td>
+    <td th:text="${#strings.isEmpty(user.passport) ? 'no passport' : user.passport}"></td>
+    <td th:text="${user.role.name()}"></td>
+    <td>
+      <p th:if="${user.active}">Active</p>
+      <p th:unless="${user.active}">Inactive</p>
+    </td>
+    <td th:text="${#temporals.format(user.createdAt, 'dd MMM YYYY HH:mm')}"></td>
+    <td th:text="${#temporals.format(user.updatedOn, 'dd MMM YYYY HH:mm')}"></td>
+    <td>
+      <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PUT">
+        <button class="profile-actions-button">
+          <p>Change Role</p>
+        </button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div>
+  <a th:href="@{/home}">Back to Home</a>
+</div>
+</body>
+</html>

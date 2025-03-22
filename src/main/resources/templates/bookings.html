@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bookings</title>
+</head>
+<body>
+<header>
+    <div>
+        <p th:insert="~{fragments/nav-bar::nav}"></p>
+    </div>
+</header>
+<main>
+    <h3>All Bookings</h3>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th height="35px">Booking Reference</th>
+            <th height="35px">Room Reference</th>
+            <th height="35px">Room Number</th>
+            <th height="35px">Payment Status</th>
+            <th height="35px">Check-In Date</th>
+            <th height="35px">Check-Out Date</th>
+            <th height="35px">Booking Created on</th>
+            <th height="35px">Total Price</th>
+            <th height="35px">Booking Status</th>
+            <th height="35px">User Id</th>
+            <th height="35px">Delete Booking</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr th:each="booking:${allBookings}">
+
+            <td th:text="${booking.id}" height="35px"></td>
+            <td th:text="${booking.room.id}" height="35px"></td>
+            <td th:text="${booking.room.roomNumber}" height="35px"></td>
+            <td th:text="${booking.paymentStatus}" height="35px"></td>
+            <td th:text="${#temporals.format(booking.checkInDate,'dd-MMMM-YYYY')}" height="35px"></td>
+            <td th:text="${#temporals.format(booking.checkOutDate,'dd-MMMM-YYYY')}" height="35px"></td>
+            <td th:text="${#temporals.format(booking.createdAt,'dd-MMMM-YYYY HH:mm')}" height="35px"></td>
+            <td th:text="${booking.totalPrice}" height="35px"></td>
+            <td th:text="${booking.bookingStatus}" height="35px"></td>
+            <td th:text="${booking.user.id}" height="35px"></td>
+
+            <td height="35px">
+                <form th:action="@{'/bookings/' + ${booking.id}}" th:method="DELETE">
+                    <button>Delete a Booking</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${user.role.name()=='ADMIN'}">
+        <a th:href="@{/payments/allCompleted}">All Payments By Payment Status Completed</a>
+    </div>
+
+    <div>
+        <a th:href="@{/rooms}">Back to Rooms</a>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

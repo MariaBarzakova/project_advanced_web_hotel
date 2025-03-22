@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Details</title>
+</head>
+<body style="text-align:center">
+<div>
+    <p th:insert="~{fragments/nav-bar::nav}"></p>
+</div>
+<main >
+    <h1><i>Welcome to Our Hotel</i></h1>
+
+    <h2>Room Number: <span th:text="${roomDetails.roomNumber}"></span></h2>
+    <h2>Room Details: <span th:text="${roomDetails.description}"></span></h2>
+    <h2>Price Per Night: <span th:text="${roomDetails.pricePerNight + ' EUR/Night'}"></span></h2>
+    <img th:src="${roomDetails.imageUrl}" height="500" width="500">
+    <h2>Room Id: <span th:text="${roomDetails.id}"></span></h2>
+
+    <a th:href="@{/rooms}">Back to Rooms</a>
+
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

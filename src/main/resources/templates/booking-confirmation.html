@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Booking Confirmation</title>
+</head>
+<body>
+<div class="container">
+  <h2>Booking Confirmation: </h2>
+  <h3>Check-in time: 3 pm / Check-out time: 12 pm.</h3>
+  <hr style="width:30%;text-align:left;margin-left:0">
+  <div class="details">
+    <p><strong>User ID:</strong> <span th:text="${user.id}"></span></p>
+    <p><strong>First Name:</strong> <span th:text="${#strings.capitalize(#strings.toLowerCase(user.firstName))}"></span></p>
+    <p><strong>Last Name:</strong> <span th:text="${#strings.capitalize(#strings.toLowerCase(user.lastName))}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+    <p><strong>Phone Number:</strong> <span th:text="${user.phoneNumber}"></span></p>
+    <p><strong>Address:</strong> <span th:text="${#strings.capitalize(#strings.toLowerCase(user.address))}"></span></p>
+    <hr style="width:30%;text-align:left;margin-left:0">
+    <p><strong>Booking Reference: </strong> <span th:text="${latestBooking.id}"></span></p>
+    <p><strong>Room Reference: </strong> <span th:text="${latestBooking.room.id}"></span></p>
+    <p><strong>Room Number: <span th:text="${latestBooking.room.roomNumber}"></span></strong></p>
+    <p><strong>Payment Status: </strong> <span th:text="${latestBooking.paymentStatus}"></span></p>
+    <p><strong>Check-In Date: <span th:text="${#temporals.format(latestBooking.checkInDate,'dd-MMMM-YYYY')}"></span></strong></p>
+    <p><strong>Check-Out Date: <span th:text="${#temporals.format(latestBooking.checkOutDate,'dd-MMMM-YYYY')}"></span></strong></p>
+    <p><strong>Created At: </strong> <span th:text="${#temporals.format(latestBooking.createdAt,'dd-MMMM-YYYY HH:mm')}"></span></p>
+    <p><strong>Total Price: <span th:text="${latestBooking.totalPrice + ' EUR'}"></span></strong></p>
+    <p><strong>Booking Status: </strong> <span th:text="${latestBooking.bookingStatus}"></span></p>
+
+    <h3>Your booking is accepted!</h3>
+    <h4>Thank you for choosing our hotel!</h4>
+  </div>
+  <div style="text-align: center; margin-top: 20px;">
+    <div><a th:href="@{/rooms}">Back to Rooms</a></div>
+    <div><a th:href="@{/home}">Back to Home</a></div>
+  </div>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

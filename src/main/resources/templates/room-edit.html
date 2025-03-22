@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Room</title>
+</head>
+<body>
+<header>
+  <div>
+    <p th:insert="~{fragments/nav-bar::nav}"></p>
+  </div>
+</header>
+<main>
+  <form th:action="@{'/rooms/' + ${id} + '/edit'}" th:method="PUT" th:object="${editRoomRequest}">
+
+    <label for="roomNumber">Room Number:</label>
+    <input type="text" id="roomNumber" name="roomNumber" placeholder="Room Number" required th:field="*{roomNumber}">
+    <p th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></p>
+
+
+    <label for="type">Room Type:</label>
+    <input type="text" id="type" name="type" placeholder="Room Type" required th:field="*{type}">
+    <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+
+    <label for="pricePerNight">Price Per Night:</label>
+    <input type="text" id="pricePerNight" name="pricePerNight" placeholder="Price Per Night" required th:field="*{pricePerNight}">
+    <p th:if="${#fields.hasErrors('pricePerNight')}" th:errors="*{pricePerNight}"></p>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" placeholder="Description" required th:field="*{description}">
+    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+
+    <label for="imageUrl">Image Url:</label>
+    <input type="text" id="imageUrl" name="imageUrl" placeholder="Image Url" required th:field="*{imageUrl}">
+    <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></p>
+
+    <div class="button-holder d-flex justify-content-center">
+      <button type="submit" value="Confirm">Confirm</button>
+    </div>
+  </form>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

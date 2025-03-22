@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Booking</title>
+</head>
+<body>
+<header>
+  <div>
+    <p th:insert="~{fragments/nav-bar::nav}"></p>
+  </div>
+</header>
+<main>
+  <h3>PLEASE FILL IN YOUR BOOKING REQUEST:</h3>
+
+  <form th:action="@{'/bookings/new/' + ${roomId}}" th:method="POST" th:object="${bookingRequest}">
+
+
+    <label for="checkInDate">Check-In Date:</label>
+    <input type="date" id="checkInDate" name="checkInDate" placeholder="Check-In Date" required
+           th:field="*{checkInDate}">
+    <p th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></p>
+
+    <label for="checkOutDate">Check-Out Date:</label>
+    <input type="date" id="checkOutDate" name="checkOutDate" placeholder="Check-Out Date" required
+           th:field="*{checkOutDate}">
+    <p th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></p>
+
+    <label for="createdAt">Created At Date and Time:</label>
+    <input type="datetime-local" id="createdAt" name="createdAt" placeholder="Created At" required
+           th:field="*{createdAt}">
+    <p th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}"></p>
+
+
+    <div><label for="paymentStatus">Payment Status:</label></div>
+    <select id="paymentStatus" name="paymentStatus" required th:field="*{paymentStatus}">
+      <option value="">-- Select Payment Status --</option>
+      <option th:each="paymentStatus : ${T(app.payment.model.PaymentStatus).values()}" th:value="${paymentStatus}"
+              th:text="${paymentStatus}">
+      </option>
+    </select>
+    <p th:if="${#fields.hasErrors('paymentStatus')}" th:errors="*{paymentStatus}"></p>
+
+    <label hidden for="totalPrice">Total Price:</label>
+    <input hidden type="text" id="totalPrice" name="totalPrice" placeholder="Total Price" value="1"
+           th:text="*{totalPrice}" >
+    <p th:if="${#fields.hasErrors('totalPrice')}" th:errors="*{totalPrice}"></p>
+
+    <div><label for="bookingStatus">Booking Status:</label></div>
+    <select id="bookingStatus" name="bookingStatus" required th:field="*{bookingStatus}">
+      <option value="">-- Select Booking Status --</option>
+      <option th:each="bookingStatus : ${T(app.booking.model.BookingStatus).values()}" th:value="${bookingStatus}"
+              th:text="${bookingStatus}">
+      </option>
+    </select>
+    <p th:if="${#fields.hasErrors('bookingStatus')}" th:errors="*{bookingStatus}"></p>
+
+    <div class="button-holder d-flex justify-content-center">
+      <button type="submit" value="Login">Create Booking</button>
+    </div>
+  </form>
+  <hr>
+  <div><a th:href="@{/rooms}">Deny Booking</a></div>
+  <hr>
+  <!--                <td>-->
+  <!--                    <a th:href="@{/bookings/confirmation}">Booking Report</a>-->
+  <!--                </td>-->
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

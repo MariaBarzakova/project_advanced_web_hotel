@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index Page</title>
+</head>
+<body>
+<header>
+  <h1>Welcome to Our Hotel</h1>
+</header>
+<main>
+  <section>
+    <h2>Enjoy Your Stay</h2>
+    <h3>Experience luxury and comfort with us.</h3>
+  </section>
+  <h3>
+    <a class="primary-text" th:href="@{/login}">&nbspLogin&nbsp</a>
+    if you have an account or
+    <a class="primary-text" th:href="@{/register}">&nbspRegister&nbsp</a>
+    now and check available rooms.
+  </h3>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

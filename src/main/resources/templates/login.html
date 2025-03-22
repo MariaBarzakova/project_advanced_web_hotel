@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+<header></header>
+<main>
+    <form th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Username" required th:field="*{username}">
+
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" placeholder="Password" required th:field="*{password}">
+        <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" value="Login">Login</button>
+        </div>
+    </form>
+
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

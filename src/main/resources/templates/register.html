@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+</head>
+<body>
+<header></header>
+<main>
+    <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
+        <label for="name">Username:</label>
+        <input type="text" id="name" name="name" placeholder="Username" required th:field="*{username}">
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" placeholder="Password" required th:field="*{password}">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
+        <label for="confirmPassword">ConfirmPassword:</label>
+        <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required th:field="*{confirmPassword}">
+        <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="Email" required th:field="*{email}">
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" value="Register">Register</button>
+        </div>
+    </form>
+
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

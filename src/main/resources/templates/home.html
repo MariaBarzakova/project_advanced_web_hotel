@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+</head>
+<body>
+<div>
+  <p th:insert="~{fragments/nav-bar::nav}"></p>
+</div>
+<header>
+  <h1 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}">Welcome to Our
+    Hotel</i></h1>
+
+</header>
+<main>
+  <section>
+    <h2><a th:href="@{/rooms}">Visit Our selection of Rooms and Suites</a></h2>
+    <h3><i>Hotel information</i></h3>
+    <nav>
+      <ul><i>
+        <li>Address: 1 Unknown str., Sofia 1000, Bulgaria.</li>
+        <li>Internet is free: Stay connected through your stay with a high-speed Wi-Fi.</li>
+        <li>Check-in time: 3 pm / Check-out time: 12 pm.</li>
+        <li>Smoking policy: Non-smoking public spaces and rooms.</li>
+        <li>Air Conditioning in every room: Stay cool and comfortable through your stay.</li>
+        <li> We offer on-site parking for your convenience.</li>
+      </i></ul>
+    </nav>
+    <nav>
+      <ul>
+        <li>Check-In Date</li>
+        <li>Check-Out Date</li>
+        <li>Room Type</li>
+      </ul>
+      <!--            <button>Search Rooms</button>-->
+      <div><a th:href="@{/rooms}">All Rooms</a></div>
+      <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/users}">All Users</a></div>
+    </nav>
+    <p>Our travelers give their opinion:</p>
+  </section>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Statements </title>
+</head>
+<body>
+<h3>All Completed Payments Report </h3>
+<table class="table table-striped table-dark">
+    <thead>
+    <tr>
+        <th height="35px">Payment Reference</th>
+        <th height="35px">Payment Amount</th>
+        <th height="35px">Room Number</th>
+        <th height="35px">Payment Date</th>
+        <th height="35px">Payment Status</th>
+        <th height="35px">Booking Reference</th>
+        <th height="35px">User Reference</th>
+
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr th:each="payment: ${allPaymentsCompleted}">
+        <td th:text="${payment.id}" height="35px"></td>
+        <td th:text="${payment.amount}" height="35px"></td>
+        <td th:text="${payment.booking.room.roomNumber}" height="35px"></td>
+        <td th:text="${#temporals.format(payment.paymentDate,'dd-MMMM-YYYY')}" height="35px"></td>
+        <td th:text="${payment.paymentStatus}" height="35px"></td>
+        <td th:text="${payment.booking.id}" height="35px"></td>
+        <td th:text="${payment.user.id}" height="35px"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <strong><h4>Total amount: <span th:text="${totalAmount + ' EUR'}"></span></h4></strong>
+</div>
+<div>
+    <a th:href="@{/home}">Back to Home</a>
+</div>
+
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Room</title>
+</head>
+<body>
+<form th:action="@{/rooms/new}" th:method="POST" th:object="${roomRequest}">
+
+  <label for="roomNumber">Room Number:</label>
+  <input type="text" id="roomNumber" name="roomNumber" placeholder="Room Number" required
+         th:field="*{roomNumber}">
+  <p th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></p>
+
+  <label for="type">Room Type:</label>
+  <select id="type" name="type" required th:field="*{type}">
+    <option value="">-- Select Room Type --</option>
+    <option th:each="type : ${T(app.room.model.RoomType).values()}" th:value="${type}" th:text="${type}">
+    </option>
+  </select>
+  <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+
+  <label for="pricePerNight">Price Per Night:</label>
+  <input type="text" id="pricePerNight" name="pricePerNight" placeholder="Price Per Night" required
+         th:field="*{pricePerNight}">
+  <p th:if="${#fields.hasErrors('pricePerNight')}" th:errors="*{pricePerNight}"></p>
+
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="description" placeholder="Description" required
+         th:field="*{description}">
+  <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+
+  <label for="imageUrl">Image Url:</label>
+  <input type="text" id="imageUrl" name="imageUrl" placeholder="Image Url" required th:field="*{imageUrl}">
+  <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></p>
+
+  <div class="button-holder d-flex justify-content-center">
+    <button type="submit" value="Add">Add</button>
+  </div>
+</form>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>
