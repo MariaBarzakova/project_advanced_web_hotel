@@ -1,9 +1,12 @@
 package app.web.dto;
 
+import app.user.model.User;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.UUID;
+import java.time.LocalDate;
+
 @Data
 public class FeedbackRequest {
     @NotBlank
@@ -15,5 +18,5 @@ public class FeedbackRequest {
     @NotBlank
     private String message;
 
-    private UUID userId;
+    private User user;
 }

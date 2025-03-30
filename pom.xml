@@ -11,7 +11,7 @@
     <groupId>project-advanced-web-hotel</groupId>
     <artifactId>project-advanced-web-hotel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Project Advanced Web Hotel</name>
+    <name>project_advanced_web_hotel</name>
     <description>Project Advanced Web Hotel</description>
     <url/>
     <licenses>
@@ -85,6 +85,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

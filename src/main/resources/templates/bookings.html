@@ -50,6 +50,9 @@
                 </form>
             </td>
         </tr>
+        <tr th:if="${#lists.isEmpty(allBookings)}">
+            <td >No Data Available</td>
+        </tr>
         </tbody>
     </table>
 

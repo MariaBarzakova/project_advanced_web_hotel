@@ -14,12 +14,12 @@ import java.util.UUID;
 @Configuration
 public class RoomInitializer implements CommandLineRunner {
     private final RoomRepository roomRepository;
-    private final BookingService bookingService;
+    //private final BookingService bookingService;
 
     @Autowired
     public RoomInitializer(RoomRepository roomRepository, BookingService bookingService) {
         this.roomRepository = roomRepository;
-        this.bookingService = bookingService;
+        //this.bookingService = bookingService;
     }
     @Override
     public void run(String... args) throws Exception {

@@ -60,7 +60,7 @@ public class UserController {
             return modelAndView;
         }
         userService.editUserDetails(id, userEditRequest);
-        return new ModelAndView("redirect:/rooms");
+        return new ModelAndView("redirect:/home");
     }
 
     @PutMapping("/{id}/role")

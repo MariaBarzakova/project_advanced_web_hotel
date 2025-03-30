@@ -28,11 +28,11 @@
   <tr th:each="user : ${users}">
     <td th:text="${user.id}"></td>
     <td th:text="${user.username}"></td>
-    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.firstName))) ? 'no first name' : user.firstName}"></td>
-    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.lastName))) ? 'no last name' : user.lastName}"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.firstName))) ? 'no first name' : (#strings.capitalize(#strings.toLowerCase(user.firstName)))}"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.lastName))) ? 'no last name' : (#strings.capitalize(#strings.toLowerCase(user.lastName)))}"></td>
     <td th:text="${#strings.isEmpty(user.phoneNumber) ? 'no phone number' : user.phoneNumber}"></td>
     <td th:text="${user.email}"></td>
-    <td th:text="${#strings.isEmpty(user.address) ? 'no address' : user.address}"></td>
+    <td th:text="${#strings.isEmpty(user.address) ? 'no address' : (#strings.capitalize(#strings.toLowerCase(user.address)))}"></td>
     <td th:text="${#strings.isEmpty(user.passport) ? 'no passport' : user.passport}"></td>
     <td th:text="${user.role.name()}"></td>
     <td>
@@ -44,7 +44,14 @@
     <td>
       <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PUT">
         <button class="profile-actions-button">
-          <p>Change Role</p>
+          <p >Change Role</p>
+        </button>
+      </form>
+    </td>
+    <td>
+      <form th:action="@{/employees}" th:method="DELETE">
+        <button class="profile-actions-button">
+          <p>Delete Employee</p>
         </button>
       </form>
     </td>

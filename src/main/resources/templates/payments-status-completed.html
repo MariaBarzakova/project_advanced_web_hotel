@@ -30,7 +30,9 @@
         <td th:text="${payment.paymentStatus}" height="35px"></td>
         <td th:text="${payment.booking.id}" height="35px"></td>
         <td th:text="${payment.user.id}" height="35px"></td>
-
+    </tr>
+    <tr th:if="${#lists.isEmpty(allPaymentsCompleted)}">
+        <td >No Data Available</td>
     </tr>
     </tbody>
 </table>

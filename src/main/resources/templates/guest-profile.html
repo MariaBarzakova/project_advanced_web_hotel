@@ -33,12 +33,13 @@
   <p th:if="${#fields.hasErrors('passport')}" th:errors="*{passport}"></p>
 
   <div class="button-holder d-flex justify-content-center">
-    <button type="submit" value="confirm" form >Confirm Your Data</button>
+    <button type="submit" value="Confirm Your Data" >Confirm Your Data</button>
   </div>
 </form>
-  <div><a th:href="@{/rooms}">Go to Booking a Room</a></div>
-  <div><a th:href="@{/rooms}">Back to Rooms</a></div>
-  <div><a th:href="@{/home}">Deny Booking</a></div>
+
+<!--  <div><a th:href="@{/rooms}">Go to Booking a Room</a></div>-->
+<!--  <div><a th:href="@{/rooms}">Back to Rooms</a></div>-->
+<!--  <div><a th:href="@{/home}">Deny Booking</a></div>-->
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

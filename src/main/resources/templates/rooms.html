@@ -40,37 +40,37 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="room:${allRooms}">
-            <td style="width: 5%">
-                <a th:href="@{/rooms/{id}(id=${room.id})}">
-                    <img class="mr-2" th:src="${room.imageUrl}" alt="Room Image" width="35px" height="35px">
-                </a>
-                <p>Click on image</p>
-            </td>
-            <td th:text="${room.roomNumber}" width="35px" height="35px"></td>
-            <td th:text="${room.id}" width="35px" height="35px"></td>
-            <td th:text="${room.type}" width="35px" height="35px"></td>
-            <td th:text="${room.description}" width="200px" height="35px"></td>
-            <td th:text="${room.pricePerNight + ' EUR/Night'}" width="140px" height="35px"></td>
+            <tr th:each="room:${allRooms}">
+                <td style="width: 5%">
+                    <a th:href="@{/rooms/{id}(id=${room.id})}">
+                        <img class="mr-2" th:src="${room.imageUrl}" alt="Room Image" width="35px" height="35px">
+                    </a>
+                    <p>Click on image</p>
+                </td>
+                <td th:text="${room.roomNumber}" width="35px" height="35px"></td>
+                <td th:text="${room.id}" width="35px" height="35px"></td>
+                <td th:text="${room.type}" width="35px" height="35px"></td>
+                <td th:text="${room.description}" width="200px" height="35px"></td>
+                <td th:text="${room.pricePerNight + ' EUR/Night'}" width="140px" height="35px"></td>
 
-            <td>
-                <a th:if="${user.active}" th:href="@{'/bookings/new/' + ${room.id}}" ><p>Book it</p> </a>
-                <a th:unless="${user.active}" th:href="@{'/users/'+${user.id} + '/profile'}" ><p>Enter your personal Data then Book the room</p> </a>
-            </td>
+                <td>
+                    <a th:if="${user.active}" th:href="@{'/bookings/new/' + ${room.id}}" ><p>Book it</p> </a>
+                    <a th:unless="${user.active}" th:href="@{'/users/'+${user.id} + '/profile'}" ><p>Enter your personal Data then Book the room</p> </a>
+                </td>
 
-            <td th:if="${user.role.name()=='ADMIN'}" >
-                <a  th:href="@{'/bookings/' + ${room.id}}">Select All Bookings For A Room</a>
-            </td>
-            <td th:if="${user.role.name()=='ADMIN'}" >
-                <a th:href="@{'/rooms/' + ${room.id} + '/edit'}" width="35px" height="35px">Edit Room Details</a>
-            </td>
+                <td th:if="${user.role.name()=='ADMIN'}" >
+                    <a  th:href="@{'/bookings/' + ${room.id}}">Select All Bookings For A Room</a>
+                </td>
+                <td th:if="${user.role.name()=='ADMIN'}" >
+                    <a th:href="@{'/rooms/' + ${room.id} + '/edit'}" width="35px" height="35px">Edit Room Details</a>
+                </td>
 
-            <td th:if="${user.role.name()=='ADMIN'}" >
-                <form th:action="@{'/rooms/' + ${room.id}}" th:method="DELETE" width="35px" height="35px">
-                    <button class="btn-danger btn">Delete Room</button>
-                </form>
-            </td>
-        </tr>
+                <td th:if="${user.role.name()=='ADMIN'}" >
+                    <form th:action="@{'/rooms/' + ${room.id}}" th:method="DELETE" width="35px" height="35px">
+                        <button class="btn-danger btn">Delete Room</button>
+                    </form>
+                </td>
+            </tr>
         </tbody>
     </table>
     <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/bookings/all}">All Bookings</a></div>

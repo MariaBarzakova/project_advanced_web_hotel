@@ -1,5 +1,6 @@
 package app.user.service;
 
+import app.employee.service.EmployeeService;
 import app.exception.DomainException;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
@@ -13,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 import app.web.dto.UserEditRequest;
 
@@ -27,11 +27,14 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmployeeService employeeService;
+
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmployeeService employeeService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.employeeService = employeeService;
     }
 
     public void registerUser(RegisterRequest registerRequest) {
@@ -39,7 +42,6 @@ public class UserService implements UserDetailsService {
         if (optionalUser.isPresent()) {
             throw new RuntimeException("User already exists");
         }
-
         User user = User.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -50,6 +52,11 @@ public class UserService implements UserDetailsService {
                 .updatedOn(LocalDateTime.now())
                 .build();
         userRepository.save(user);
+        if (userRepository.count() == 1) {
+            user.setActive(true);
+            user.setRole(UserRole.ADMIN);
+            userRepository.save(user);
+        }
     }
 
     public User getUserById(UUID userId) {
@@ -66,9 +73,12 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
+
+        employeeService.createEmployeeRequest(user.getId());
+        //employeeService.updateEmployeeActive(userId);
     }
 
-    public List<User> getAllUsersReadyForRenewal(){
+    public List<User> getAllUsersReadyForRenewal() {
         return userRepository.findAllByActiveIsTrue();
     }
 
@@ -79,12 +89,20 @@ public class UserService implements UserDetailsService {
     public void switchRole(UUID userId) {
         User user = getUserById(userId);
         if (user.getRole() == UserRole.GUEST) {
-            user.setRole(UserRole.ADMIN);
-        } else {
+            user.setRole(UserRole.EMPLOYEE);
+            user.setActive(true);
+            userRepository.save(user);
+
+            employeeService.createEmployeeRequest(user.getId());
+
+        } else if (user.getRole() == UserRole.EMPLOYEE) {
             user.setRole(UserRole.GUEST);
+            user.setActive(false);
+            userRepository.save(user);
         }
-        userRepository.save(user);
+
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

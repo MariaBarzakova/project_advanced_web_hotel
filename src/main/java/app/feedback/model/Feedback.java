@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -31,7 +31,7 @@ public class Feedback {
     private String message;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     @ManyToOne
     private User user;
