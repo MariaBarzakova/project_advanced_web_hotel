@@ -41,6 +41,7 @@
     </td>
     <td th:text="${#temporals.format(user.createdAt, 'dd MMM YYYY HH:mm')}"></td>
     <td th:text="${#temporals.format(user.updatedOn, 'dd MMM YYYY HH:mm')}"></td>
+
     <td>
       <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PUT">
         <button class="profile-actions-button">
@@ -48,9 +49,10 @@
         </button>
       </form>
     </td>
+
     <td>
-      <form th:action="@{/employees}" th:method="DELETE">
-        <button class="profile-actions-button">
+      <form th:action="@{'/employees/' + ${user.id}}" th:method="DELETE">
+        <button type="submit"  class="profile-actions-button">
           <p>Delete Employee</p>
         </button>
       </form>
