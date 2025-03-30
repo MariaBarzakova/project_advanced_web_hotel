@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+
+</head>
+<body>
+<table class="styled-table">
+  <thead>
+  <div>
+    <p th:insert="~{fragments/nav-bar::nav}"></p>
+  </div>
+  <tr>
+    <th>Id</th>
+    <th>Username</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Phone Number</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Passport</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr >
+    <td th:text="${employee.userId}"></td>
+    <td th:text="${employee.username}"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(employee.firstName))) ? 'no first name' : (#strings.capitalize(#strings.toLowerCase(employee.firstName)))}"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(employee.lastName))) ? 'no last name' : (#strings.capitalize(#strings.toLowerCase(employee.lastName)))}"></td>
+    <td th:text="${#strings.isEmpty(employee.phoneNumber) ? 'no phone number' : employee.phoneNumber}"></td>
+    <td th:text="${employee.email}"></td>
+    <td th:text="${#strings.isEmpty(employee.address) ? 'no address' : (#strings.capitalize(#strings.toLowerCase(employee.address)))}"></td>
+    <td th:text="${#strings.isEmpty(employee.passport) ? 'no passport' : employee.passport}"></td>
+    <td>
+      <p th:if="${employee.active}">Active</p>
+      <p th:unless="${employee.active}">Inactive</p>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a th:href= "@{/home}"><button>Confirm</button></a>
+<!--<div th:if="${user.role.name()=='EMPLOYEE'}">-->
+<!--  <a th:href="@{'/users/'+${user.id} + '/profile'}">-->
+<!--    Please, enter your Personal Data-->
+<!--  </a >-->
+<!--</div>-->
+</body>
+</html>

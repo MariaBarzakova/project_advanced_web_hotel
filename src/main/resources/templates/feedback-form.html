@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+
+</head>
+<body>
+<div th:if="${user.role.name() !='EMPLOYEE'}">
+<form class="form" th:action="@{/feedbacks/new}" th:method="POST" th:object="${feedbackRequest}">
+
+    <label for="user">User name:</label>
+    <input type="text" id="user" name="user" placeholder="user" required th:field="*{user.username}">
+    <p th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></p>
+
+    <label for="firstName">First name:</label>
+    <input type="text" id="firstName" name="firstName" placeholder="firstName" required th:field="*{firstName}">
+    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+
+    <label for="lastName">Last name:</label>
+    <input type="text" id="lastName" name="lastName" placeholder="Username" required th:field="*{lastName}">
+    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+
+    <label for="message">Opinion:</label>
+    <input type="text" id="message" name="message" placeholder="message" required th:field="*{message}">
+    <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
+
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" value="Send your opinion">Send your opinion</button>
+    </div>
+</form>
+</div>
+</body>
+</html>
