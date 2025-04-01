@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="project_advanced_web_hotel" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="-Dspring.profiles.active" />
+    <option name="DEBUG_MODE" value="true" />
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <module name="project_advanced_web_hotel" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="app.Application" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="app.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

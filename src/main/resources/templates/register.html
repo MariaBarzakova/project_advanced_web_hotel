@@ -12,6 +12,7 @@
         <label for="name">Username:</label>
         <input type="text" id="name" name="name" placeholder="Username" required th:field="*{username}">
         <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+        <p th:text="${alreadyExistMessage}"></p>
 
         <label for="password">Password:</label>
         <input type="text" id="password" name="password" placeholder="Password" required th:field="*{password}">
@@ -24,11 +25,14 @@
         <label for="email">Email:</label>
         <input type="text" id="email" placeholder="Email" required th:field="*{email}">
         <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        <p th:text="${uniqueEmail}"></p>
 
         <div class="button-holder d-flex justify-content-center">
             <button type="submit" value="Register">Register</button>
         </div>
     </form>
+
+    <a th:href="@{/}">Back</a>
 
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>

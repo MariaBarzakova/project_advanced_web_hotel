@@ -1,6 +1,5 @@
 package app.room.service;
 
-import app.exception.DomainException;
 import app.room.model.Room;
 import app.room.model.RoomType;
 import app.room.repository.RoomRepository;
@@ -51,10 +50,10 @@ public class RoomService {
 
     public Room getRoomById(UUID roomId) {
         return roomRepository.findById(roomId)
-                .orElseThrow(() -> new DomainException("Room with id %s does not exist.".formatted(roomId)));
+                .orElseThrow(() -> new RuntimeException("Room not found"));
     }
     public Room getRoomByRoomNumber(String roomNumber) {
-        return roomRepository.findByRoomNumber(roomNumber).orElseThrow(()->new DomainException("Room not found"));
+        return roomRepository.findByRoomNumber(roomNumber).orElseThrow(()->new RuntimeException("Room not found"));
     }
 
     public void deleteRoomById(UUID id) {
@@ -69,15 +68,15 @@ public class RoomService {
     public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate) {
 
         if (checkInDate.isBefore(LocalDate.now())){
-            throw new DomainException("Check in date cannot be before today ");
+            throw new RuntimeException("Check in date cannot be before today ");
         }
 
         if (checkOutDate.isBefore(checkInDate)){
-            throw new DomainException("Check out date cannot be before check in date ");
+            throw new RuntimeException("Check out date cannot be before check in date ");
         }
 
         if (checkInDate.isEqual(checkOutDate)){
-            throw new DomainException("Check in date cannot be equal to check out date ");
+            throw new RuntimeException("Check in date cannot be equal to check out date ");
         }
 
         return roomRepository.findAvailableRooms(checkInDate, checkOutDate);

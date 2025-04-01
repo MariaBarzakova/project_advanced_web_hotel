@@ -11,6 +11,7 @@
   <input type="text" id="roomNumber" name="roomNumber" placeholder="Room Number" required
          th:field="*{roomNumber}">
   <p th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></p>
+  <p th:text = "${roomException}"></p>
 
   <label for="type">Room Type:</label>
   <select id="type" name="type" required th:field="*{type}">

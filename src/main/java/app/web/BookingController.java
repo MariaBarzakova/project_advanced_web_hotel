@@ -2,6 +2,7 @@ package app.web;
 
 import app.booking.model.Booking;
 import app.booking.service.BookingService;
+import app.exception.BookingException;
 import app.room.model.Room;
 import app.room.service.RoomService;
 import app.security.AuthenticationMetadata;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,22 +38,23 @@ public class BookingController {
 
     @GetMapping("/new/{roomId}")
     public ModelAndView registerNewBooking(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
-                                           @PathVariable UUID roomId){
+                                           @PathVariable UUID roomId) {
 
         User user = userService.getUserById(authenticationMetadata.getUserId());
-        Room room= roomService.getRoomById(roomId);
+        Room room = roomService.getRoomById(roomId);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("booking-new");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("room",room);
+        modelAndView.addObject("room", room);
         modelAndView.addObject("bookingRequest", new BookingRequest());
         return modelAndView;
     }
 
+
     @PostMapping("/new/{roomId}")
     public String createBooking(@PathVariable UUID roomId, @Valid BookingRequest bookingRequest,
                                 BindingResult bindingResult, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "booking-new";
         }
 
@@ -60,6 +63,7 @@ public class BookingController {
         bookingService.createNewBooking(bookingRequest, user, roomId);
         return "redirect:/bookings/confirmation";
     }
+
 
     @GetMapping("/confirmation")
     public ModelAndView bookingConfirmation(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
@@ -102,10 +106,13 @@ public class BookingController {
         modelAndView.addObject("bookingsForARoom", bookingsForARoom);
         return modelAndView;
     }
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String deleteSpecificBooking(@PathVariable UUID id){
-        bookingService.deleteBooking(id);
-        return "redirect:/bookings";
+
+
+    @ExceptionHandler(BookingException.class)
+    public String handleBooking(RedirectAttributes redirectAttributes, BookingException exception) {
+        String message = exception.getMessage();
+        redirectAttributes.addFlashAttribute("bookingException",message);
+        return "redirect:/bookings/new/{roomId}";
     }
+
 }

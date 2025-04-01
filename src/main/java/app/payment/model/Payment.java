@@ -32,7 +32,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false,cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "booking_id", referencedColumnName = "id", unique = true)
     private Booking booking;
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Server Error Error Status 500</title>
+</head>
+<body>
+  <div>
+    <h2>Something went wrong.</h2>
+    <p>Sorry for the inconvenience. Please contact the administrator.</p>
+    <p>Error code: 500 Internal Server Error</p>
+    <p>Additional Message: <span th:text="${errorMessage}"></span> </p>
+    <p>Timestamp: <span th:text="${#temporals.format(#temporals.createNow(), 'dd-MM-yyyy HH:mm')}"></span></p>
+  </div>
+  <div>
+    <a th:href="@{/home}" class="profile-actions-button">
+      <p>Go back</p>
+    </a>
+  </div>
+</body>
+</html>

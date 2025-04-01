@@ -7,19 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, UUID> {
+
     List<Payment> findAllByBooking_PaymentStatus(PaymentStatus paymentStatus);
 
-    List<Payment> findAllByPaymentStatusAndPaymentDate(PaymentStatus paymentStatus, LocalDate today);
+    Optional<Payment> findByBookingId(UUID id);
 
-    //@Query("""
-    //    SELECT p FROM Payment p
-    //    WHERE p.paymentStatus = :status
-    //    AND p.paymentDate = :paymentDate
-    //""")
-    //List<Payment> findByStatusAndDate(@Param("status") PaymentStatus status, @Param("paymentDate") LocalDate paymentDate);
 
 }
 

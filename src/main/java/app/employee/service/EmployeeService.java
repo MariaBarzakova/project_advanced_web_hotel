@@ -3,7 +3,6 @@ package app.employee.service;
 import app.employee.client.EmployeeClient;
 import app.employee.client.dto.Employee;
 import app.employee.client.dto.EmployeeRequest;
-import app.exception.DomainException;
 import app.exception.EmployeeFeignException;
 import app.user.model.User;
 import app.user.model.UserRole;
@@ -29,10 +28,10 @@ public class EmployeeService {
 
     public void createEmployeeRequest(UUID userId) {
         User employee = userRepository.findById(userId)
-                .orElseThrow(() -> new DomainException("Employee not found"));
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
 
         if (employee.getRole() != UserRole.EMPLOYEE) {
-            log.warn("User with ID [%s] is not an employee, skipping.".formatted(userId));
+            log.warn("User with ID [%s] is not an employee.".formatted(userId));
             return;
         }
             EmployeeRequest employeeRequest = EmployeeRequest.builder()

@@ -2,7 +2,7 @@ package app.booking.service;
 
 import app.booking.model.Booking;
 import app.booking.repository.BookingRepository;
-import app.exception.DomainException;
+import app.exception.BookingException;
 import app.payment.model.Payment;
 import app.payment.repository.PaymentRepository;
 import app.room.model.Room;
@@ -18,9 +18,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 @Slf4j
 @Service
 public class BookingService {
@@ -43,28 +42,28 @@ public class BookingService {
 
     public Booking getBookingById(UUID id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new DomainException("Booking with id %s does not exist.".formatted(id)));
+                .orElseThrow(() -> new RuntimeException("Booking with id %s does not exist.".formatted(id)));
     }
 
     @Transactional
     public void createNewBooking(BookingRequest bookingRequest, User user, UUID roomId) {
-        Room room = roomRepository.findById(roomId).orElseThrow(()->new DomainException("Room is not found"));
+        Room room = roomRepository.findById(roomId).orElseThrow(()->new RuntimeException("Room is not found"));
 
         if (bookingRequest.getCheckInDate().isBefore(LocalDate.now())) {
-            throw new DomainException("check in date cannot be before today ");
+            throw new BookingException("Room is not available for the selected date ranges.Check entered dates.");
         }
 
         if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
-            throw new DomainException("check out date cannot be before check in date ");
+            throw new BookingException("Room is not available for the selected date ranges.Check entered dates.");
         }
 
         if (bookingRequest.getCheckInDate().isEqual(bookingRequest.getCheckOutDate())) {
-            throw new DomainException("check in date cannot be equal to check out date ");
+            throw new BookingException("Room is not available for the selected date ranges.Check entered dates.");
         }
 
         Boolean available = bookingRepository.roomAvailable(roomId, bookingRequest.getCheckInDate(), bookingRequest.getCheckOutDate());
         if (available == null || !available) {
-            throw new DomainException("Room is not available for the selected date ranges");
+            throw new BookingException("Room is not available for the selected date ranges.Check entered dates.");
         }
 
         if(!user.getActive()){
@@ -93,22 +92,18 @@ public class BookingService {
         paymentRepository.save(payment);
     }
     public BigDecimal calculateTotalPrice(BookingRequest bookingRequest,UUID roomId){
-        Room room = roomRepository.findById(roomId).orElseThrow(()->new DomainException("Room is not found"));
+        Room room = roomRepository.findById(roomId).orElseThrow(()->new RuntimeException("Room is not found"));
         BigDecimal pricePerNight = room.getPricePerNight();
         long days = ChronoUnit.DAYS.between(bookingRequest.getCheckInDate(), bookingRequest.getCheckOutDate());
         return pricePerNight.multiply(BigDecimal.valueOf(days));
     }
 
     public Booking getLatestBookingForUser(UUID userId) {
-        return bookingRepository.findTopByUserIdOrderByCreatedAtDesc(userId).orElseThrow(() -> new DomainException("No recent booking found"));
+        return bookingRepository.findTopByUserIdOrderByCreatedAtDesc(userId).orElseThrow(() -> new RuntimeException("No recent booking found"));
     }
 
     public List<Booking> getBookingsForSpecifiedRoom(UUID roomId) {
         return bookingRepository.findByRoomId(roomId);
-    }
-
-    public void deleteBooking(UUID id) {
-        bookingRepository.deleteById(id);
     }
 
 }

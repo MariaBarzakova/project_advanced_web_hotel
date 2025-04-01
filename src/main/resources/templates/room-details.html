@@ -18,6 +18,8 @@
     <img th:src="${roomDetails.imageUrl}" height="500" width="500">
     <h2>Room Id: <span th:text="${roomDetails.id}"></span></h2>
 
+    <p th:text = "${roomException}"></p>
+
     <a th:href="@{/rooms}">Back to Rooms</a>
 
 </main>

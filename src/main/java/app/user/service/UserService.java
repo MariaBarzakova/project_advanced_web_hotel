@@ -1,7 +1,8 @@
 package app.user.service;
 
 import app.employee.service.EmployeeService;
-import app.exception.DomainException;
+import app.exception.AlreadyExistException;
+import app.exception.UniqueEmail;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.model.UserRole;
@@ -40,8 +41,14 @@ public class UserService implements UserDetailsService {
     public void registerUser(RegisterRequest registerRequest) {
         Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
         if (optionalUser.isPresent()) {
-            throw new RuntimeException("User already exists");
+            throw new AlreadyExistException("User with username [%s] already exists!".formatted(registerRequest.getUsername()));
         }
+
+        Optional<User> optionalByEmail = userRepository.findByEmail(registerRequest.getEmail());
+        if(optionalByEmail.isPresent()){
+            throw new UniqueEmail("Email [%s] is in use. Email must be unique!".formatted(registerRequest.getEmail()));
+        }
+
         User user = User.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -60,7 +67,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User getUserById(UUID userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new DomainException("User does not exist"));
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User does not exist"));
     }
 
     public void editUserDetails(UUID userId, UserEditRequest userEditRequest) {
@@ -106,7 +113,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new DomainException("User with this username does not exist."));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User with this username does not exist."));
 
         return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole());
     }

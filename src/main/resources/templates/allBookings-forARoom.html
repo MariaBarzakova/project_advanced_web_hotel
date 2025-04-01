@@ -41,6 +41,9 @@
     </tr>
     </tbody>
 </table>
+
+<p th:if="${#lists.isEmpty(bookingsForARoom)}"> No Data Available </p>
+
 <a th:href="@{/bookings/all}">Back to All Bookings</a>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

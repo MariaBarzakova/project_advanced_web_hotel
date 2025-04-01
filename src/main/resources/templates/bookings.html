@@ -26,7 +26,6 @@
             <th height="35px">Total Price</th>
             <th height="35px">Booking Status</th>
             <th height="35px">User Id</th>
-            <th height="35px">Delete Booking</th>
         </tr>
 
         </thead>
@@ -43,18 +42,10 @@
             <td th:text="${booking.totalPrice}" height="35px"></td>
             <td th:text="${booking.bookingStatus}" height="35px"></td>
             <td th:text="${booking.user.id}" height="35px"></td>
-
-            <td height="35px">
-                <form th:action="@{'/bookings/' + ${booking.id}}" th:method="DELETE">
-                    <button>Delete a Booking</button>
-                </form>
-            </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(allBookings)}">
-            <td >No Data Available</td>
         </tr>
         </tbody>
     </table>
+    <p th:if="${#lists.isEmpty(allBookings)}"> No Data Available </p>
 
     <div th:if="${user.role.name()=='ADMIN'}">
         <a th:href="@{/payments/allCompleted}">All Payments By Payment Status Completed</a>

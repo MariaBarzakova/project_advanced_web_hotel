@@ -73,6 +73,9 @@
             </tr>
         </tbody>
     </table>
+
+
+
     <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/bookings/all}">All Bookings</a></div>
     <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/rooms/new}">Add New Room</a></div>
 

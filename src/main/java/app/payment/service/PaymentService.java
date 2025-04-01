@@ -1,6 +1,6 @@
 package app.payment.service;
 
-import app.exception.DomainException;
+import app.exception.WarningNoPaymentException;
 import app.payment.model.Payment;
 import app.payment.model.PaymentStatus;
 import app.payment.repository.PaymentRepository;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 @Slf4j
@@ -29,11 +28,7 @@ public class PaymentService {
 
     public BigDecimal getTotalAmountOfPayments(){
         return getAllPaymentsByBookingStatus().stream().map(Payment::getAmount)
-                .reduce(BigDecimal::add).orElseThrow(()->new DomainException("There is no Payments yet"));
+                .reduce(BigDecimal::add).orElseThrow(()->new WarningNoPaymentException("There is no Payments yet"));
     }
 
-    public List<Payment> getAllPaymentsByStatusAndDate() {
-        List<Payment> allCompletedToday = paymentRepository.findAllByPaymentStatusAndPaymentDate(PaymentStatus.COMPLETED, LocalDate.now());
-        return allCompletedToday.stream().sorted(Comparator.comparing(Payment::getPaymentDate).reversed()).toList();
-    }
 }

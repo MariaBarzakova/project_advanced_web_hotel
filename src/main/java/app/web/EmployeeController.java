@@ -23,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class EmployeeController {
     private final EmployeeService employeeService;
     private final UserService userService;
-    //private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     public EmployeeController(EmployeeService employeeService, UserService userService) {
@@ -33,7 +32,6 @@ public class EmployeeController {
 
     @GetMapping
     public ModelAndView getEmployeePage(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-        //log.debug("EmployeeController: Handling request for /employees");
         User user = userService.getUserById(authenticationMetadata.getUserId());
         Employee employee = employeeService.getEmployeeById(user.getId());
         ModelAndView modelAndView = new ModelAndView();

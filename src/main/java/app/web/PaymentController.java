@@ -1,5 +1,7 @@
 package app.web;
 
+import app.exception.UniqueEmail;
+import app.exception.WarningNoPaymentException;
 import app.payment.model.Payment;
 import app.payment.service.PaymentService;
 import app.security.AuthenticationMetadata;
@@ -9,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -43,4 +47,12 @@ public class PaymentController {
         return modelAndView;
     }
 
+    @ExceptionHandler(WarningNoPaymentException.class)
+    public ModelAndView handleNoPayment(WarningNoPaymentException exception) {
+        String message = exception.getMessage();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("payment-error");
+        modelAndView.addObject("message",message);
+        return modelAndView;
+    }
 }
