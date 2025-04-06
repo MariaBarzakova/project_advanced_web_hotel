@@ -11,8 +11,11 @@
         <p th:insert="~{fragments/nav-bar::nav}"></p>
     </div>
 </header>
+<h3 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}">Welcome to Our
+    Hotel</h3>
+<h4>You made an excellent choice of room number <span th:text="${room.roomNumber}"></span></h4>
 <main>
-    <div th:if="${user.role.name() !='EMPLOYEE'}">
+    <div th:if="${user.role.name() =='GUEST'}">
         <h3>Please Fill in your booking request:</h3>
         <form th:action="@{'/bookings/new/' + ${roomId}}" th:method="POST" th:object="${bookingRequest}">
 

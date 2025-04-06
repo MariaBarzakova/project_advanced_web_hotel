@@ -6,6 +6,7 @@ import app.room.repository.RoomRepository;
 import app.user.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import app.web.dto.EditRoomRequest;
 import app.web.dto.RoomRequest;
@@ -63,22 +64,5 @@ public class RoomService {
     public List<Room> getAllRooms() {
         List<Room> rooms = roomRepository.findAll();
         return rooms.stream().sorted(Comparator.comparing(Room::getType).thenComparing(Room::getRoomNumber)).toList();
-    }
-
-    public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate) {
-
-        if (checkInDate.isBefore(LocalDate.now())){
-            throw new RuntimeException("Check in date cannot be before today ");
-        }
-
-        if (checkOutDate.isBefore(checkInDate)){
-            throw new RuntimeException("Check out date cannot be before check in date ");
-        }
-
-        if (checkInDate.isEqual(checkOutDate)){
-            throw new RuntimeException("Check in date cannot be equal to check out date ");
-        }
-
-        return roomRepository.findAvailableRooms(checkInDate, checkOutDate);
     }
 }

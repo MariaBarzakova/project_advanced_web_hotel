@@ -4,6 +4,8 @@ import app.user.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,6 +58,10 @@ public class AuthenticationMetadata implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public static Authentication authenticationWithPrincipal(AuthenticationMetadata metadata) {
+        return new TestingAuthenticationToken(metadata, null);
     }
 }
 

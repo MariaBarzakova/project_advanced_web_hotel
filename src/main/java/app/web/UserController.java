@@ -38,6 +38,7 @@ public class UserController {
         return modelAndView;
     }
 
+
     @GetMapping("/{id}/profile")
     public ModelAndView getUserProfile(@PathVariable UUID id) {
         User user = userService.getUserById(id);
@@ -60,7 +61,7 @@ public class UserController {
             return modelAndView;
         }
         userService.editUserDetails(id, userEditRequest);
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/rooms");
     }
 
     @PutMapping("/{id}/role")

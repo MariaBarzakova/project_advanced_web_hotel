@@ -13,22 +13,6 @@ import java.util.UUID;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, UUID> {
-    @Query("""
-            SELECT r FROM Room r
-            WHERE
-                r.id NOT IN (
-                    SELECT b.room.id
-                    FROM Booking b
-                    WHERE :checkInDate <= b.checkOutDate
-                    AND :checkOutDate >= b.checkInDate
-                    AND b.bookingStatus IN ('BOOKED', 'CHECKED_IN')
-                )
-             """)
-    List<Room> findAvailableRooms(
-            @Param("checkInDate") LocalDate checkInDate,
-            @Param("checkOutDate") LocalDate checkOutDate
-    );
-
 
     Optional<Room> findByRoomNumber(String roomNumber);
 

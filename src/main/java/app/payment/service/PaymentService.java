@@ -4,14 +4,14 @@ import app.exception.WarningNoPaymentException;
 import app.payment.model.Payment;
 import app.payment.model.PaymentStatus;
 import app.payment.repository.PaymentRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
-@Slf4j
+
+
 @Service
 public class PaymentService {
     private final PaymentRepository paymentRepository;
@@ -30,5 +30,4 @@ public class PaymentService {
         return getAllPaymentsByBookingStatus().stream().map(Payment::getAmount)
                 .reduce(BigDecimal::add).orElseThrow(()->new WarningNoPaymentException("There is no Payments yet"));
     }
-
 }

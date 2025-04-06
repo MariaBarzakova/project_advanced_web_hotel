@@ -6,7 +6,9 @@ import app.user.model.User;
 import app.web.dto.EditRoomRequest;
 import app.web.dto.FeedbackResponse;
 import app.web.dto.UserEditRequest;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class DtoMapper {
     public static UserEditRequest mapUserToUserEditRequest(User user){
         return UserEditRequest.builder()

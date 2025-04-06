@@ -74,10 +74,10 @@ public class RoomController {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("room-new");
-            modelAndView.addObject("user",user);
+            modelAndView.addObject("user", user);
             return modelAndView;
         }
-        roomService.createNewRoom(roomRequest,user);
+        roomService.createNewRoom(roomRequest, user);
         return new ModelAndView("redirect:/rooms");
     }
 
@@ -107,11 +107,11 @@ public class RoomController {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("room-edit");
-            modelAndView.addObject("user",user);
+            modelAndView.addObject("user", user);
             modelAndView.addObject("editRoomRequest", editRoomRequest);
             return modelAndView;
         }
-        roomService.editExistingRoom(id,editRoomRequest);
+        roomService.editExistingRoom(id, editRoomRequest);
         return new ModelAndView("redirect:/rooms");
     }
 
@@ -121,5 +121,6 @@ public class RoomController {
         roomService.deleteRoomById(id);
         return "redirect:/rooms";
     }
-
 }
+
+

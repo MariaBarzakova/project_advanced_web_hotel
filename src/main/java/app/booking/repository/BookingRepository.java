@@ -1,6 +1,7 @@
 package app.booking.repository;
 
 import app.booking.model.Booking;
+import app.payment.model.PaymentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,6 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
 
 
     Optional<Booking> findTopByUserIdOrderByCreatedAtDesc(UUID userId);
+
+    List<Booking> findAllByPaymentStatus(PaymentStatus paymentStatus);
 }

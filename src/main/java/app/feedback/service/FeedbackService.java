@@ -22,12 +22,10 @@ public class FeedbackService {
     }
 
     public List<Feedback> getAllFeedbacks() {
-       //feedbackList.stream().limit(5).toList();
         return repository.findAll();
     }
 
     public void createFeedback(FeedbackRequest feedbackRequest, User user) {
-        //UUID userId=feedbackRequest.getUserId();
         Feedback feedback = Feedback.builder()
                 .firstName(feedbackRequest.getFirstName())
                 .lastName(feedbackRequest.getLastName())

@@ -15,13 +15,8 @@ import java.util.UUID;
 
 @ControllerAdvice
 public class ExceptionAdvice {
-    private final RoomService roomService;
 
-    public ExceptionAdvice(RoomService roomService) {
-        this.roomService = roomService;
-    }
-
-    @ExceptionHandler(AlreadyExistException.class)
+    @ExceptionHandler(value = AlreadyExistException.class)
     public String handleUsernameAlreadyExist(RedirectAttributes redirectAttributes, AlreadyExistException exception) {
 
         String message = exception.getMessage();

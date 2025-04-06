@@ -4,6 +4,7 @@ import app.booking.model.Booking;
 import app.booking.repository.BookingRepository;
 import app.exception.BookingException;
 import app.payment.model.Payment;
+import app.payment.model.PaymentStatus;
 import app.payment.repository.PaymentRepository;
 import app.room.model.Room;
 import app.room.repository.RoomRepository;
@@ -81,15 +82,16 @@ public class BookingService {
                 .bookingStatus(bookingRequest.getBookingStatus())
                 .build();
         bookingRepository.save(booking);
-
-        Payment payment = Payment.builder()
-                .amount(booking.getTotalPrice())
-                .paymentDate(LocalDate.now())
-                .paymentStatus(booking.getPaymentStatus())
-                .booking(booking)
-                .user(booking.getUser())
-                .build();
-        paymentRepository.save(payment);
+        if(bookingRequest.getPaymentStatus().equals(PaymentStatus.COMPLETED)) {
+            Payment payment = Payment.builder()
+                    .amount(booking.getTotalPrice())
+                    .paymentDate(LocalDate.now())
+                    .paymentStatus(PaymentStatus.COMPLETED)
+                    .booking(booking)
+                    .user(booking.getUser())
+                    .build();
+            paymentRepository.save(payment);
+        }
     }
     public BigDecimal calculateTotalPrice(BookingRequest bookingRequest,UUID roomId){
         Room room = roomRepository.findById(roomId).orElseThrow(()->new RuntimeException("Room is not found"));
@@ -104,6 +106,10 @@ public class BookingService {
 
     public List<Booking> getBookingsForSpecifiedRoom(UUID roomId) {
         return bookingRepository.findByRoomId(roomId);
+    }
+
+    public List<Booking> getFailedPaymentStatus(){
+       return bookingRepository.findAllByPaymentStatus(PaymentStatus.FAILED);
     }
 
 }

@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import app.web.dto.RegisterRequest;
 import app.web.dto.UserEditRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,10 +39,10 @@ public class UserService implements UserDetailsService {
         this.employeeService = employeeService;
     }
 
-    public void registerUser(RegisterRequest registerRequest) {
+    public User registerUser(RegisterRequest registerRequest) {
         Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
         if (optionalUser.isPresent()) {
-            throw new AlreadyExistException("User with username [%s] already exists!".formatted(registerRequest.getUsername()));
+            throw new AlreadyExistException("User with username already exists!");
         }
 
         Optional<User> optionalByEmail = userRepository.findByEmail(registerRequest.getEmail());
@@ -64,6 +65,7 @@ public class UserService implements UserDetailsService {
             user.setRole(UserRole.ADMIN);
             userRepository.save(user);
         }
+        return user;
     }
 
     public User getUserById(UUID userId) {
@@ -93,6 +95,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public void switchRole(UUID userId) {
         User user = getUserById(userId);
         if (user.getRole() == UserRole.GUEST) {

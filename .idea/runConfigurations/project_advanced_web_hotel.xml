@@ -1,16 +1,16 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="project_advanced_web_hotel" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="-Dspring.profiles.active" />
-    <option name="DEBUG_MODE" value="true" />
-    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+  <configuration default="false" name="project_advanced_web_hotel" type="JUnit" factoryName="JUnit">
     <module name="project_advanced_web_hotel" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="app.Application" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="app.*" />
+        <option name="PATTERN" value="app.web.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
+    <option name="PACKAGE_NAME" value="app" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="package" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

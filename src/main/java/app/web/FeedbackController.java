@@ -43,9 +43,10 @@ public class FeedbackController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("feedback-form");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("feedbackRequest", new FeedbackRequest());
+        modelAndView.addObject("feedbackRequest", FeedbackRequest.builder().build());
         return modelAndView;
     }
+
 
     @PostMapping("/new")
     public String createNewFeedback(@Valid FeedbackRequest feedbackRequest, BindingResult bindingResult,
@@ -60,7 +61,7 @@ public class FeedbackController {
     }
 
         @GetMapping("/all")
-    public ModelAndView getAllRoomsPage(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+    public ModelAndView getAllFeedbacksPage(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         User user = userService.getUserById(authenticationMetadata.getUserId());
         List<Feedback> allFeedbacks = feedbackService.getAllFeedbacks();
         ModelAndView modelAndView = new ModelAndView();
