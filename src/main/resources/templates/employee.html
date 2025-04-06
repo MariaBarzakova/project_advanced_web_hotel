@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 
 </head>
 <body>
-<table class="styled-table">
-  <thead>
+<header>
   <div>
     <p th:insert="~{fragments/nav-bar::nav}"></p>
   </div>
+</header>
+<main>
+<table class="table table-bordered table-success table-hover">
   <tr>
     <th>Id</th>
     <th>Username</th>
@@ -47,5 +53,7 @@
 <!--    Please, enter your Personal Data-->
 <!--  </a >-->
 <!--</div>-->
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>

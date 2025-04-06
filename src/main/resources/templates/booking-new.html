@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Booking</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <header>
@@ -11,62 +15,88 @@
         <p th:insert="~{fragments/nav-bar::nav}"></p>
     </div>
 </header>
-<h3 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}">Welcome to Our
-    Hotel</h3>
-<h4>You made an excellent choice of room number <span th:text="${room.roomNumber}"></span></h4>
 <main>
-    <div th:if="${user.role.name() =='GUEST'}">
-        <h3>Please Fill in your booking request:</h3>
-        <form th:action="@{'/bookings/new/' + ${roomId}}" th:method="POST" th:object="${bookingRequest}">
+    <div th:if="${user.role.name() !='EMPLOYEE'}">
+        <section class="text-center mt-2">
+            <h3 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}">Welcome to Our
+                Hotel</h3>
+            <h4>You made an excellent choice of room number <span th:text="${room.roomNumber}"></span></h4>
+            <h4>Please Fill in your booking request:</h4>
+        </section>
 
-            <label for="checkInDate">Check-In Date:</label>
-            <input type="date" id="checkInDate" name="checkInDate" placeholder="Check-In Date" required
-                   th:field="*{checkInDate}">
-            <p th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></p>
+        <form class="welcome login" th:action="@{'/bookings/new/' + ${roomId}}" th:method="POST" th:object="${bookingRequest}">
+            <div class="form-group">
+                <h2 class="text-center mt-2"><span class="badge badge-pill badge-dark">Booking</span></h2>
 
-            <label for="checkOutDate">Check-Out Date:</label>
-            <input type="date" id="checkOutDate" name="checkOutDate" placeholder="Check-Out Date" required
-                   th:field="*{checkOutDate}">
-            <p th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></p>
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                     <label for="checkInDate">Check-In Date:</label>
+                </div>
+                <input type="date" id="checkInDate" name="checkInDate" placeholder="Check-In Date" required
+                       th:field="*{checkInDate}">
+                <p th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></p>
+            </div>
 
-            <label for="createdAt">Created At Date and Time:</label>
-            <input type="datetime-local" id="createdAt" name="createdAt" placeholder="Created At" required
-                   th:field="*{createdAt}">
-            <p th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}"></p>
+            <div class="form-group">
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="checkOutDate">Check-Out Date:</label>
+                </div>
+                <input type="date" id="checkOutDate" name="checkOutDate" placeholder="Check-Out Date" required
+                       th:field="*{checkOutDate}">
+                <p th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></p>
+            </div>
 
-            <div><label for="paymentStatus">Payment Status:</label></div>
-            <select id="paymentStatus" name="paymentStatus" required th:field="*{paymentStatus}">
-                <option value="">-- Select Payment Status --</option>
-                <option th:each="paymentStatus : ${T(app.payment.model.PaymentStatus).values()}"
-                        th:value="${paymentStatus}"
-                        th:text="${paymentStatus}">
-                </option>
-            </select>
-            <p th:if="${#fields.hasErrors('paymentStatus')}" th:errors="*{paymentStatus}"></p>
+            <div class="form-group">
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="createdAt">Created At Date and Time:</label>
+                </div>
+                <input type="datetime-local" id="createdAt" name="createdAt" placeholder="Created At" required
+                       th:field="*{createdAt}">
+                <p th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}"></p>
+            </div>
 
-            <label hidden for="totalPrice">Total Price:</label>
-            <input hidden type="text" id="totalPrice" name="totalPrice" placeholder="Total Price" value="1"
-                   th:text="*{totalPrice}">
-            <p th:if="${#fields.hasErrors('totalPrice')}" th:errors="*{totalPrice}"></p>
+            <div class="form-group">
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="paymentStatus">Payment Status:</label>
+                </div>
+                <select id="paymentStatus" name="paymentStatus" required th:field="*{paymentStatus}">
+                    <option value="">-- Select Payment Status --</option>
+                    <option th:each="paymentStatus : ${T(app.payment.model.PaymentStatus).values()}"
+                            th:value="${paymentStatus}"
+                            th:text="${paymentStatus}">
+                    </option>
+                </select>
+                <p th:if="${#fields.hasErrors('paymentStatus')}" th:errors="*{paymentStatus}"></p>
+            </div>
 
-            <div><label for="bookingStatus">Booking Status:</label></div>
-            <select id="bookingStatus" name="bookingStatus" required th:field="*{bookingStatus}">
-                <option value="">-- Select Booking Status --</option>
-                <option th:each="bookingStatus : ${T(app.booking.model.BookingStatus).values()}"
-                        th:value="${bookingStatus}"
-                        th:text="${bookingStatus}">
-                </option>
-            </select>
-            <p th:if="${#fields.hasErrors('bookingStatus')}" th:errors="*{bookingStatus}"></p>
+            <div class="form-group">
+                <label hidden for="totalPrice">Total Price:</label>
+                <input hidden type="text" id="totalPrice" name="totalPrice" placeholder="Total Price" value="1"
+                       th:text="*{totalPrice}">
+                <p th:if="${#fields.hasErrors('totalPrice')}" th:errors="*{totalPrice}"></p>
+            </div>
 
-            <p th:text="${bookingException}"></p>
+            <div class="form-group">
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="bookingStatus">Booking Status:</label>
+                </div>
+                <select id="bookingStatus" name="bookingStatus" required th:field="*{bookingStatus}">
+                    <option value="">-- Select Booking Status --</option>
+                    <option th:each="bookingStatus : ${T(app.booking.model.BookingStatus).values()}"
+                            th:value="${bookingStatus}"
+                            th:text="${bookingStatus}">
+                    </option>
+                </select>
+                <p th:if="${#fields.hasErrors('bookingStatus')}" th:errors="*{bookingStatus}"></p>
+                <p th:text="${bookingException}"></p>
+            </div>
+
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" value="Login">Create Booking</button>
             </div>
         </form>
-    </div>
 
-    <div><a th:href="@{/rooms}">Deny Booking</a></div>
+        <div><a th:href="@{/rooms}">Deny Booking</a></div>
+    </div>
 
     <!--                <td>-->
     <!--                    <a th:href="@{/bookings/confirmation}">Booking Report</a>-->

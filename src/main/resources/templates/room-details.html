@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Details</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
-<body style="text-align:center">
-<div>
-    <p th:insert="~{fragments/nav-bar::nav}"></p>
-</div>
-<main >
-    <h1><i>Welcome to Our Hotel</i></h1>
+<body>
+<header>
+    <div>
+        <p th:insert="~{fragments/nav-bar::nav}"></p>
+    </div>
+</header>
+<main>
+    <section class="text-center mt-2">
+        <h4><i>Welcome to Our Hotel</i></h4>
 
-    <h2>Room Number: <span th:text="${roomDetails.roomNumber}"></span></h2>
-    <h2>Room Details: <span th:text="${roomDetails.description}"></span></h2>
-    <h2>Price Per Night: <span th:text="${roomDetails.pricePerNight + ' EUR/Night'}"></span></h2>
-    <img th:src="${roomDetails.imageUrl}" height="500" width="500">
-    <h2>Room Id: <span th:text="${roomDetails.id}"></span></h2>
+        <h5>Room Number: <span th:text="${roomDetails.roomNumber}"></span></h5>
+        <h5>Room Details: <span th:text="${roomDetails.description}"></span></h5>
+        <h5>Price Per Night: <span th:text="${roomDetails.pricePerNight + ' EUR/Night'}"></span></h5>
+        <img th:src="${roomDetails.imageUrl}" height="400" width="600">
+        <h6>Room Id: <span th:text="${roomDetails.id}"></span></h6>
 
-    <p th:text = "${roomException}"></p>
+        <p th:text="${roomException}"></p>
 
-    <a th:href="@{/rooms}">Back to Rooms</a>
-
+        <a th:href="@{/rooms}">Back to Rooms</a>
+    </section>
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

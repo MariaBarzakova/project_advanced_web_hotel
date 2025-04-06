@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Rooms</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <header>
@@ -12,27 +16,27 @@
     </div>
 </header>
 <main>
-    <h1 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}"></h1>
+    <section class="text-center mt-2">
+        <h3 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}"></h3>
 
-    <h2>You can examine our <span th:text="${allRooms.size()}"></span> Rooms </h2>
+        <h4>You can examine our <span th:text="${allRooms.size()}"></span> Rooms </h4>
 
-    <h3><a th:href="@{/rooms/free}">Our available rooms according to your convenient dates</a></h3>
-
-    <h3>
-        <a th:href="@{'/users/'+${user.id} + '/profile'}">
-            Please, enter your Personal Data if you wish to book a room
-        </a>
-    </h3>
-    <table class="table table-striped table-dark">
+         <h5>
+             <a th:href="@{'/users/'+${user.id} + '/profile'}">
+                Please, enter your Personal Data if you wish to book a room
+            </a>
+        </h5>
+    </section>
+    <table class="table table-bordered table-success table-hover">
         <thead>
         <tr>
-            <th width="200px" height="35px">Image</th>
-            <th width="35px" height="35px">Room Number</th>
-            <th width="35px" height="35px">Room Id</th>
-            <th width="35px" height="35px">Type</th>
-            <th width="200px" height="35px">Description</th>
-            <th width="140px" height="35px">Price Per Night</th>
-            <th width="35px" height="35px">Book it</th>
+            <th height="35px">Image</th>
+            <th height="35px">Room Number</th>
+            <th height="35px">Room Id</th>
+            <th height="35px">Type</th>
+            <th height="35px">Description</th>
+            <th height="35px">Price Per Night</th>
+            <th height="35px">Book it</th>
 
             <th th:if="${user.role.name()=='ADMIN'}" height="35px">All Bookings for a Room</th>
             <th th:if="${user.role.name()=='ADMIN'}"height="35px">Edit Room Details</th>
@@ -45,13 +49,13 @@
                     <a th:href="@{/rooms/{id}(id=${room.id})}">
                         <img class="mr-2" th:src="${room.imageUrl}" alt="Room Image" width="35px" height="35px">
                     </a>
-                    <p>Click on image</p>
+                    <p>Click</p>
                 </td>
-                <td th:text="${room.roomNumber}" width="35px" height="35px"></td>
-                <td th:text="${room.id}" width="35px" height="35px"></td>
-                <td th:text="${room.type}" width="35px" height="35px"></td>
-                <td th:text="${room.description}" width="200px" height="35px"></td>
-                <td th:text="${room.pricePerNight + ' EUR/Night'}" width="140px" height="35px"></td>
+                <td th:text="${room.roomNumber}" height="35px"></td>
+                <td th:text="${room.id}" height="35px"></td>
+                <td th:text="${room.type}"  height="35px"></td>
+                <td th:text="${room.description}"  height="35px"></td>
+                <td th:text="${room.pricePerNight + ' EUR/Night'}"  height="35px"></td>
 
                 <td>
                     <a th:if="${user.active}" th:href="@{'/bookings/new/' + ${room.id}}" ><p>Book it</p> </a>
@@ -74,9 +78,8 @@
         </tbody>
     </table>
 
-
-
     <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/bookings/all}">All Bookings</a></div>
+    <hr class="my-3 bg-white w-50"/>
     <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/rooms/new}">Add New Room</a></div>
 
 </main>

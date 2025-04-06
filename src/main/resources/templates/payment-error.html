@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Error</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-<p th:text="${message}"></p>
-<p>Timestamp: <span th:text="${#temporals.format(#temporals.createNow(), 'dd-MM-yyyy HH:mm')}"></span></p>
-
+<header>
+    <div>
+        <p th:insert="~{fragments/nav-bar::nav}"></p>
+    </div>
+</header>
+<main>
+    <div class="text-center mt-2">
+        <h5 th:text="${message}"></h5>
+        <h5>Date: <span th:text="${#temporals.format(#temporals.createNow(), 'dd-MM-yyyy HH:mm')}"></span></h5>
+    </div>
+    <div class="text-center mt-2">
+        <a th:href="@{/home}" class="buttons-info">
+            <p>Go back</p>
+        </a>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>

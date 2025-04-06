@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not Found Specific Errors</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-<div>
-  <h2>We couldn't find that.</h2>
-  <p>Requested resource was not found. Please contact the administrator.</p>
-  <p>Error code: 404 Not Found</p>
-  <p>Message: <span th:text="${errorMessage}"></span></p>
-  <p>Timestamp: <span th:text="${#temporals.format(#temporals.createNow(), 'dd-MM-yyyy HH:mm')}"></span></p>
+<header>
+  <div>
+    <p th:insert="~{fragments/nav-bar::nav}"></p>
+  </div>
+</header>
+<main>
+
+<div class="text-center mt-2">
+    <h2>We couldn't find that.</h2>
+    <h5>Requested resource was not found. Please contact the administrator.</h5>
+    <h5>Error code: 404 Not Found</h5>
+    <h5>Message: <span th:text="${errorMessage}"></span></h5>
+    <h5>Timestamp: <span th:text="${#temporals.format(#temporals.createNow(), 'dd-MM-yyyy HH:mm')}"></span></h5>
   </div>
 
-<div>
-  <a th:href="@{/home}" class="profile-actions-button">
+<div class="text-center mt-2">
+  <a th:href="@{/home}" class="buttons-info">
     <p>Go back</p>
   </a>
 </div>
-
+</main>
+<footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>

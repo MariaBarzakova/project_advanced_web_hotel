@@ -1,66 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-<div>
-    <p th:insert="~{fragments/nav-bar::nav}"></p>
-</div>
 <header>
-    <h1 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}">Welcome to Our
-        Hotel</h1>
+    <div>
+        <p th:insert="~{fragments/nav-bar::nav}"></p>
+    </div>
 </header>
 <main>
+    <section class="welcome mt-1 mb-1">
+        <p th:class="welcome-text"
+           th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}"
+           class="mySticky bg-gray text-dark user"> Welcome to Our Hotel</p>
 
-    <h2><a th:href="@{/rooms}">Visit Our selection of Rooms and Suites</a></h2>
-    <h3><i>Hotel information</i></h3>
-    <nav>
-        <ul>
-            <li>Address: 1 Unknown str., Sofia 1000, Bulgaria.</li>
-            <li>Internet is free: Stay connected through your stay with a high-speed Wi-Fi.</li>
-            <li>Check-in time: 3 pm / Check-out time: 12 pm.</li>
-            <li>Smoking policy: Non-smoking public spaces and rooms.</li>
-            <li>Air Conditioning in every room: Stay cool and comfortable through your stay.</li>
-            <li> We offer on-site parking for your convenience.</li>
-        </ul>
-    </nav>
 
+        <h3 class="home-fields"><a th:href="@{/rooms}">Visit Our selection of Rooms and Suites</a></h3>
+        <h4><i>Hotel information</i></h4>
+        <nav>
+            <ul class="welcome-info">
+                <li>Address: 1 Unknown str., Sofia 1000, Bulgaria.</li>
+                <li>Internet is free: Stay connected through your stay with a high-speed Wi-Fi.</li>
+                <li>Check-in time: 3 pm / Check-out time: 12 pm.</li>
+                <li>Smoking policy: Non-smoking public spaces and rooms.</li>
+                <li>Air Conditioning in every room: Stay cool and comfortable through your stay.</li>
+                <li> We offer on-site parking for your convenience.</li>
+            </ul>
+        </nav>
+    </section>
+
+    <section th:if="${user.role.name()=='ADMIN'}" class="adm">
         <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/users}">All Users:</a></div>
         <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/bookings/all}">All Bookings:</a></div>
-        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/payments/allCompleted}">All Completed Payments:</a></div>
+        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/payments/allCompleted}">All Completed Payments:</a>
+        </div>
 
+        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/employees}">Employee</a></div>
+        <div th:if="${user.role.name()=='EMPLOYEE'}">
+            <a th:href="@{'/users/'+${user.id} + '/profile'}">
+                Please, enter your Personal Data
+            </a>
+        </div>
+    </section>
 
-        <div th:if="${user.role.name()=='EMPLOYEE'}"><a th:href="@{/employees}">Employee</a></div>
-            <div th:if="${user.role.name()=='EMPLOYEE'}">
-                <a th:href="@{'/users/'+${user.id} + '/profile'}">
-                    Please, enter your Personal Data
-                </a >
-            </div>
+    <section class="welcome-info">
+        <h4 th:if="${user.role.name() !='EMPLOYEE'}" class="home-fields"><a th:href="@{/feedbacks/new}">Click here and
+            enter your opinion: </a></h4>
 
-
-    <h4 th:if="${user.role.name() =='GUEST'}"><a th:href="@{/feedbacks/new}">Enter your opinion: </a></h4>
-
-    <h4 th:if="${user.role.name() =='GUEST'}"><a th:href="@{/feedbacks/all}">Our travelers give their opinion:</a></h4>
-
-    <table th:if="${user.role.name() =='GUEST'}" class="table table-striped table-dark">
-        <thead>
+        <h4 th:if="${user.role.name() !='EMPLOYEE'}" class="home-fields"><a th:href="@{/feedbacks/all}">Click here to see.
+            Our travelers give their opinion:</a></h4>
+        <table th:if="${user.role.name() =='GUEST'}" class="table table-bordered">
+            <thead>
             <tr>
                 <th height="35px">First Name:</th>
                 <th height="35px">Last Name:</th>
                 <th height="35px">Opinion:</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="feedback:${allFeedbacks}">
                 <td th:text="${(#strings.capitalize(#strings.toLowerCase(feedback.firstName)))}" height="35px"></td>
                 <td th:text="${(#strings.capitalize(#strings.toLowerCase(feedback.lastName)))}" height="35px"></td>
                 <td th:text="${feedback.message}" height="35px"></td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </section>
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

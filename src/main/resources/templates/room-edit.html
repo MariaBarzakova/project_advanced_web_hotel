@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
   <title>Edit Room</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <header>
@@ -11,33 +16,53 @@
   </div>
 </header>
 <main>
-  <form th:action="@{'/rooms/' + ${id} + '/edit'}" th:method="PUT" th:object="${editRoomRequest}">
 
-    <label for="roomNumber">Room Number:</label>
-    <input type="text" id="roomNumber" name="roomNumber" placeholder="Room Number" required th:field="*{roomNumber}">
-    <p th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></p>
+    <form class="welcome login" th:action="@{'/rooms/' + ${id} + '/edit'}" th:method="PUT" th:object="${editRoomRequest}">
+      <div class="form-group">
+        <h2 class="text-center mt-2"><span class="badge badge-pill badge-dark">Edit Room Details</span></h2>
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+          <label for="roomNumber">Room Number:</label>
+        </div>
+        <input type="text" id="roomNumber" name="roomNumber" placeholder="Room Number" required th:field="*{roomNumber}">
+        <p th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></p>
+      </div>
 
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+           <label for="type">Room Type:</label>
+        </div>
+        <input type="text" id="type" name="type" placeholder="Room Type" required th:field="*{type}">
+        <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+      </div>
 
-    <label for="type">Room Type:</label>
-    <input type="text" id="type" name="type" placeholder="Room Type" required th:field="*{type}">
-    <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+            <label for="pricePerNight">Price Per Night:</label>
+        </div>
+        <input type="text" id="pricePerNight" name="pricePerNight" placeholder="Price Per Night" required th:field="*{pricePerNight}">
+        <p th:if="${#fields.hasErrors('pricePerNight')}" th:errors="*{pricePerNight}"></p>
+      </div>
 
-    <label for="pricePerNight">Price Per Night:</label>
-    <input type="text" id="pricePerNight" name="pricePerNight" placeholder="Price Per Night" required th:field="*{pricePerNight}">
-    <p th:if="${#fields.hasErrors('pricePerNight')}" th:errors="*{pricePerNight}"></p>
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+            <label for="description">Description:</label>
+        </div>
+        <input type="text" id="description" name="description" placeholder="Description" required th:field="*{description}">
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+      </div>
 
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" placeholder="Description" required th:field="*{description}">
-    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+            <label for="imageUrl">Image Url:</label>
+        </div>
+        <input type="text" id="imageUrl" name="imageUrl" placeholder="Image Url" required th:field="*{imageUrl}">
+        <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></p>
+      </div>
 
-    <label for="imageUrl">Image Url:</label>
-    <input type="text" id="imageUrl" name="imageUrl" placeholder="Image Url" required th:field="*{imageUrl}">
-    <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></p>
-
-    <div class="button-holder d-flex justify-content-center">
-      <button type="submit" value="Confirm">Confirm</button>
-    </div>
-  </form>
+      <div class="button-holder d-flex justify-content-center">
+        <button type="submit" value="Confirm">Confirm</button>
+      </div>
+    </form>
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

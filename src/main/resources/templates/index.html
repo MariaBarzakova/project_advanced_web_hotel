@@ -1,25 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index Page</title>
+    <title>Index Page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <header>
-  <h1>Welcome to Our Hotel</h1>
+    <div>
+        <p th:insert="~{fragments/nav-bar::nav}"></p>
+    </div>
 </header>
 <main>
-  <section>
-    <h2>Enjoy Your Stay</h2>
-    <h3>Experience luxury and comfort with us.</h3>
-  </section>
-  <h3>
-    <a class="primary-text" th:href="@{/login}">&nbspLogin&nbsp</a>
-    if you have an account or
-    <a class="primary-text" th:href="@{/register}">&nbspRegister&nbsp</a>
-    now and check available rooms.
-  </h3>
+    <div class="welcome">
+        <h1>Welcome to Our Hotel</h1>
+        <hr class="my-3 bg-white w-50"/>
+        <section>
+            <h2>Enjoy Your Stay</h2>
+            <h3>Experience luxury and comfort with us.</h3>
+        </section>
+        <hr class="my-3 bg-white w-50"/>
+        <h3>
+            <a class="primary-text" th:href="@{/login}">&nbspLogin&nbsp</a>
+            if you have an account or
+            <a class="primary-text" th:href="@{/register}">&nbspRegister&nbsp</a>
+            now and check available rooms.
+        </h3>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

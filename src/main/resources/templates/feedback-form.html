@@ -1,31 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Form </title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 
 </head>
 <body>
+<header>
     <div>
-        <form class="form" th:action="@{/feedbacks/new}" th:method="POST" th:object="${feedbackRequest}" >
+        <p th:insert="~{fragments/nav-bar::nav}"></p>
+    </div>
+</header>
+<main>
 
-            <label for="firstName">First name:</label>
-            <input type="text" id="firstName" name="firstName" placeholder="firstName" required th:field="*{firstName}">
-            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+        <form class="welcome login" th:action="@{/feedbacks/new}" th:method="POST" th:object="${feedbackRequest}" >
 
-            <label for="lastName">Last name:</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Username" required th:field="*{lastName}">
-            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+            <div class="form-group">
+                <h2 class="text-center mt-2"><span class="badge badge-pill badge-dark">Feedback</span></h2>
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="firstName">First name:</label>
+                </div>
+                <input type="text" id="firstName" name="firstName" placeholder="firstName" required th:field="*{firstName}">
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+            </div>
 
-            <label for="message">Opinion:</label>
-            <input type="text" id="message" name="message" placeholder="message" required th:field="*{message}">
-            <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
+            <div class="form-group">
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="lastName">Last name:</label>
+                </div>
+                <input type="text" id="lastName" name="lastName" placeholder="Username" required th:field="*{lastName}">
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+            </div>
+
+            <div class="form-group">
+                <div class="label-holder text-white textCol d-flex justify-content-center">
+                    <label for="message">Opinion:</label>
+                </div>
+                <input type="text" id="message" name="message" placeholder="message" required th:field="*{message}">
+                <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
+            </div>
 
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" value="Send your opinion">Send your opinion</button>
             </div>
         </form>
-    </div>
+</main>
+    <footer th:replace="~{fragments/footer::footer}"></footer>
     </body>
 </html>

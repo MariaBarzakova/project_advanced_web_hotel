@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
   <title>Booking Confirmation</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <header>
@@ -11,6 +15,7 @@
     <p th:insert="~{fragments/nav-bar::nav}"></p>
   </div>
 </header>
+<main>
 <div class="container">
   <h2>Booking Confirmation: </h2>
   <h3>Check-in time: 3 pm / Check-out time: 12 pm.</h3>
@@ -38,9 +43,11 @@
   </div>
   <div style="text-align: center; margin-top: 20px;">
     <div><a th:href="@{/rooms}">Back to Rooms</a></div>
+    <hr class="my-3 bg-white w-50"/>
     <div><a th:href="@{/home}">Back to Home</a></div>
   </div>
 </div>
+</main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>

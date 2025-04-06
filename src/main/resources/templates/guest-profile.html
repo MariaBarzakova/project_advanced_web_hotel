@@ -1,46 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guest Profile</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-<h1 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}"></h1>
-
-<h2>Please, enter your Personal Data if you wish to book a room</h2>
-
-<form th:action="@{'/users/'+${user.id} + '/profile'}" th:method="PUT" th:object="${userEditRequest}">
-
-  <label for="firstName">First Name:</label>
-  <input type="text" id="firstName" placeholder="First Name" required th:field="*{firstName}">
-  <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-
-  <label for="lastName">Last Name:</label>
-  <input type="text" id="lastName" placeholder="Last Name" required th:field="*{lastName}">
-  <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-
-  <label for="phoneNumber">Phone Number:</label>
-  <input type="text" id="phoneNumber" placeholder="Phone Number" required th:field="*{phoneNumber}">
-  <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-
-  <label for="address">Address:</label>
-  <input type="text" id="address" placeholder="Address" required th:field="*{address}">
-  <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-
-  <label for="passport">Passport:</label>
-  <input type="text" id="passport" placeholder="Passport" required th:field="*{passport}">
-  <p th:if="${#fields.hasErrors('passport')}" th:errors="*{passport}"></p>
-
-  <div class="button-holder d-flex justify-content-center">
-    <button type="submit" value="Confirm Your Data" >Confirm Your Data</button>
+<header>
+  <div>
+    <p th:insert="~{fragments/nav-bar::nav}"></p>
   </div>
-</form>
+</header>
+<main>
+  <section class="text-center mt-2">
+    <h3 th:text="${'Welcome to Our Hotel, ' + #strings.capitalize(#strings.toLowerCase(user.username))}"></h3>
 
+    <h4>Please, enter your Personal Data if you wish to book a room</h4>
+  </section>
+    <form class="welcome login" th:action="@{'/users/'+${user.id} + '/profile'}" th:method="PUT" th:object="${userEditRequest}">
+
+      <div class="form-group">
+        <h2 class="text-center mt-2"><span class="badge badge-pill badge-dark">Profile</span></h2>
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+          <label for="firstName">First Name:</label>
+        </div>
+        <input type="text" id="firstName" placeholder="First Name" required th:field="*{firstName}">
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+      </div>
+
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+          <label for="lastName">Last Name:</label>
+        </div>
+        <input type="text" id="lastName" placeholder="Last Name" required th:field="*{lastName}">
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+      </div>
+
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+          <label for="phoneNumber">Phone Number:</label>
+        </div>
+        <input type="text" id="phoneNumber" placeholder="Phone Number" required th:field="*{phoneNumber}">
+        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+      </div>
+
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+          <label for="address">Address:</label>
+        </div>
+        <input type="text" id="address" placeholder="Address" required th:field="*{address}">
+        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+      </div>
+
+      <div class="form-group">
+        <div class="label-holder text-white textCol d-flex justify-content-center">
+          <label for="passport">Passport:</label>
+        </div>
+        <input type="text" id="passport" placeholder="Passport" required th:field="*{passport}">
+        <p th:if="${#fields.hasErrors('passport')}" th:errors="*{passport}"></p>
+      </div>
+
+      <div class="button-holder d-flex justify-content-center">
+        <button type="submit" value="Confirm Your Data" >Confirm Your Data</button>
+      </div>
+    </form>
 <!--  <div><a th:href="@{/rooms}">Go to Booking a Room</a></div>-->
 <!--  <div><a th:href="@{/rooms}">Back to Rooms</a></div>-->
 <!--  <div><a th:href="@{/home}">Deny Booking</a></div>-->
-
+</main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>
