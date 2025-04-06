@@ -1,0 +1,253 @@
+.w-15 {
+    width: 15%;
+}
+
+.bg-gray {
+    background-color: #d6e1d2;
+}
+
+.bg-nav {
+    background-color: rgba(1, 141, 8, 0);
+}
+
+nav {
+    background-color: rgba(155, 213, 155, 0.3);
+    backdrop-filter: blur(5px);
+    font-size: 1.6em;
+    font-weight: bold;
+    display: flex;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 2px 2px 8px #5a6268;
+}
+
+nav .home {
+    padding: 0.5em;
+    flex: 1 0 50%;
+}
+
+nav .links {
+    display: flex;
+    text-decoration: none;
+    list-style-type: none;
+    justify-content: center;
+    /*padding: 0.5em;*/
+    flex: 0 1 50%;
+}
+
+body {
+    background-image: linear-gradient(rgb(241, 236, 236), rgba(195, 209, 221, 0.5), rgb(232, 221, 200)), url(/images/blur-pool-hotel-resort.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 5rem;
+}
+
+textarea {
+    resize: none;
+}
+
+.welcome {
+    position: relative;
+    border-radius: 12px;
+    margin-top: 8em;
+    /*color: #5a6268;*/
+    color: #076e57;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /*padding: 1em;*/
+    background-color: rgb(84 91 98 / 10%);
+    max-width: 1140px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 0 4px 16px black;
+    z-index: 1;
+}
+
+.welcome-info {
+    border-radius: 12px;
+    color: #076e57;
+    font-size: 0.8em;
+    text-shadow: 2px 2px 4px rgba(155, 213, 155, 0.3);
+    /*padding: 1em;*/
+    background-color: rgb(84 91 98 / 10%);
+    max-width: 1140px;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 0 4px 16px rgba(13, 211, 103, 0.3);
+    z-index: 1;
+}
+
+.welcome:hover {
+    box-shadow: 0 1px 5px rgba(177, 223, 177, 0.3);
+    backdrop-filter: blur(35px);
+
+}
+
+.login {
+    transition: 0.1s ease-in;
+    margin-top: 6em;
+    background-color: rgb(84 91 98 / 40%);
+    color: rgb(7, 172, 138);
+}
+
+.login:hover span {
+    background-color: #5a6268;
+}
+
+.login:hover {
+    backdrop-filter: blur(2px);
+
+}
+
+.home-fields {
+    border-radius: 6px;
+    background-color: rgba(39 41 42 / 40%);
+    backdrop-filter: blur(15px);
+    margin-bottom: 8px;
+    border: #5a6268 solid 2px;
+    text-align: center;
+}
+
+.text-fields {
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+ul li {
+    border-radius: 6px;
+    border: #5a6268 solid 2px;
+    margin: 0.1em;
+}
+
+ul li:hover {
+    background-color: #5a6268;
+    border: white solid 2px;
+}
+
+
+.buttons-info {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding-right: 1em;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: rgb(7, 172, 138) ;
+    flex: 1 0 20%;
+}
+
+button {
+    background-color: rgb(7, 172, 138);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+
+button:hover {
+    background-color: rgb(39, 63, 77);
+}
+
+.primary-text {
+    color: rgb(9, 221, 176);
+}
+
+footer {
+    position: static;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(175, 221, 175, 0.3);
+}
+
+.img-thumb {
+    padding: .25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    max-width: 100%;
+}
+
+.bg-blur {
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    z-index: 2;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.mySticky {
+    position: sticky;
+    left: 0;
+}
+
+.image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(139, 237, 139, 0.3);
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+    box-sizing: border-box;
+}
+
+.preview {
+    width: 35%;
+    display: block;
+    /*aspect-ratio: 1/1;*/
+    height: auto;
+    margin: 0.5em auto;
+    border-radius: 12px;
+    box-shadow: 2px 3px 5px #f5f1f1;
+    z-index: 10;
+}
+
+a {
+    color: black;
+    text-shadow: 2px 2px 4px rgba(202, 234, 202, 0.3);
+    font-weight: bold;
+}
+
+a:hover {
+    text-shadow: none;
+    text-decoration: none;
+    color: #ff972f;
+
+}
+
+.footer-text {
+    color: #b60c0c;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.welcome-text {
+    color: #b60c0c;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.adm {
+    position: relative;
+    border-radius: 12px;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 1em;
+    background-color: rgba(139, 237, 139, 0.3);
+    max-width: 1140px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    z-index: 1;
+}
