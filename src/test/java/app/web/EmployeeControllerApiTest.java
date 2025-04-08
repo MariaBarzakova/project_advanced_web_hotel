@@ -42,7 +42,7 @@ public class EmployeeControllerApiTest {
         mockEmployee.setUserId(userId);
 
         when(userService.getUserById(userId)).thenReturn(mockUser);
-        when(employeeService.getEmployeeById(userId)).thenReturn(mockEmployee);
+        when(employeeService.getEmployeeByUserId(userId)).thenReturn(mockEmployee);
         MockHttpServletRequestBuilder request = get("/employees").with(user(principal));
         mockMvc.perform(request)
                 .andExpect(status().isOk())

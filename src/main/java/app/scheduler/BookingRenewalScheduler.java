@@ -26,21 +26,24 @@ public class BookingRenewalScheduler {
         this.bookingService = bookingService;
         this.bookingRepository = bookingRepository;
     }
-    @Scheduled(fixedDelay = 20000)
+
+    @Scheduled(fixedDelay = 60000)
     public void renewBookingStatus() {
         List<Booking> failedBookings = bookingService.getFailedPaymentStatus(); //(PaymentStatus.FAILED)
         if (failedBookings.isEmpty()) {
             log.info("No Failed Bookings found for renewal");
             return;
         }
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+
         for (Booking booking : failedBookings) {
-            LocalDateTime createdAt = booking.getCreatedAt();
-            long day = ChronoUnit.DAYS.between(createdAt, LocalDateTime.now());
-            LocalDate deadLineDate = LocalDate.now().plusDays(2);
-            if(day==2 || (booking.getCheckInDate()== deadLineDate && booking.getPaymentStatus().equals(PaymentStatus.FAILED))){
-                //booking.setPaymentStatus(PaymentStatus.FAILED);
+
+            if (BookingStatus.BOOKED.equals(booking.getBookingStatus()) &&
+                    tomorrow.equals(booking.getCheckInDate())) {
+
                 booking.setBookingStatus(BookingStatus.CANCELLED);
                 bookingRepository.save(booking);
+                log.info("Booking [%s] cancelled.".formatted(booking.getId()));
             }
         }
     }

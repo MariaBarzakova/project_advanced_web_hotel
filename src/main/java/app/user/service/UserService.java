@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
 
         employeeService.createEmployeeRequest(user.getId());
-        //employeeService.updateEmployeeActive(userId);
+
     }
 
     public List<User> getAllUsersReadyForRenewal() {
@@ -110,7 +110,6 @@ public class UserService implements UserDetailsService {
             user.setActive(false);
             userRepository.save(user);
         }
-
     }
 
     @Override

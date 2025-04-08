@@ -33,7 +33,7 @@
                 </div>
                 <input type="date" id="checkInDate" name="checkInDate" placeholder="Check-In Date" required
                        th:field="*{checkInDate}">
-                <p th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></p>
+                <h4 th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></h4>
             </div>
 
             <div class="form-group">
@@ -42,7 +42,7 @@
                 </div>
                 <input type="date" id="checkOutDate" name="checkOutDate" placeholder="Check-Out Date" required
                        th:field="*{checkOutDate}">
-                <p th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></p>
+                <h4 th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></h4>
             </div>
 
             <div class="form-group">
@@ -51,7 +51,7 @@
                 </div>
                 <input type="datetime-local" id="createdAt" name="createdAt" placeholder="Created At" required
                        th:field="*{createdAt}">
-                <p th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}"></p>
+                <h4 th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}"></h4>
             </div>
 
             <div class="form-group">
@@ -86,21 +86,17 @@
                             th:text="${bookingStatus}">
                     </option>
                 </select>
-                <p th:if="${#fields.hasErrors('bookingStatus')}" th:errors="*{bookingStatus}"></p>
-                <p th:text="${bookingException}"></p>
+                <h4 th:if="${#fields.hasErrors('bookingStatus')}" th:errors="*{bookingStatus}"></h4>
+                <h4 th:text="${bookingException}"></h4>
             </div>
 
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" value="Login">Create Booking</button>
             </div>
         </form>
-
-        <div><a th:href="@{/rooms}">Deny Booking</a></div>
     </div>
+    <div th:if="${user.role.name()=='EMPLOYEE'}" class="text-center mt-2"><h4>Employees are not allowed to make reservations!<h4></h4></div>
 
-    <!--                <td>-->
-    <!--                    <a th:href="@{/bookings/confirmation}">Booking Report</a>-->
-    <!--                </td>-->
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

@@ -30,7 +30,7 @@ public class Room {
     @Column(name = "price_per_night")
     private BigDecimal pricePerNight;
 
-    @Column(name = "description")
+    @Column(name = "description",columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "image_url")

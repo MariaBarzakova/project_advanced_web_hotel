@@ -21,11 +21,13 @@
 
         <h4>You can examine our <span th:text="${allRooms.size()}"></span> Rooms </h4>
 
-         <h5>
-             <a th:href="@{'/users/'+${user.id} + '/profile'}">
-                Please, enter your Personal Data if you wish to book a room
-            </a>
-        </h5>
+        <div th:if="${user.role.name() !='EMPLOYEE'}">
+             <h5>
+                 <a th:href="@{'/users/'+${user.id} + '/profile'}">
+                    Please, enter your Personal Data if you wish to book a room
+                </a>
+            </h5>
+        </div>
     </section>
     <table class="table table-bordered table-success table-hover">
         <thead>
@@ -36,7 +38,7 @@
             <th height="35px">Type</th>
             <th height="35px">Description</th>
             <th height="35px">Price Per Night</th>
-            <th height="35px">Book it</th>
+            <th height="35px" th:if="${user.role.name()!='EMPLOYEE'}">Book it</th>
 
             <th th:if="${user.role.name()=='ADMIN'}" height="35px">All Bookings for a Room</th>
             <th th:if="${user.role.name()=='ADMIN'}"height="35px">Edit Room Details</th>
@@ -57,7 +59,7 @@
                 <td th:text="${room.description}"  height="35px"></td>
                 <td th:text="${room.pricePerNight + ' EUR/Night'}"  height="35px"></td>
 
-                <td>
+                <td th:if="${user.role.name()!='EMPLOYEE'}">
                     <a th:if="${user.active}" th:href="@{'/bookings/new/' + ${room.id}}" ><p>Book it</p> </a>
                     <a th:unless="${user.active}" th:href="@{'/users/'+${user.id} + '/profile'}" ><p>Enter your personal Data then Book the room</p> </a>
                 </td>

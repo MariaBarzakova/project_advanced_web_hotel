@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @FeignClient(name = "employee-svc", url = "http://localhost:8087/api/v1/employees")
@@ -14,11 +15,15 @@ public interface EmployeeClient {
     @PostMapping
     ResponseEntity<Void> upsertEmployee(@RequestBody EmployeeRequest employeeRequest) ;
 
-    @GetMapping
+    @GetMapping("/profile")
     ResponseEntity<Employee> getEmployeeByUserId(@RequestParam(name = "userId") UUID userId) ;
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteEmployee(@PathVariable("id") UUID id) ;
+    @GetMapping
+    ResponseEntity<List<Employee>> getAllEmployees();
+
+    @PutMapping
+    ResponseEntity<Void> updateStatus(@RequestParam(name = "userId") UUID userId) ;
+
 }
 
 

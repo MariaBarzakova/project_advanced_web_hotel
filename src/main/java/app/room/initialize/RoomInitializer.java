@@ -7,10 +7,12 @@ import app.room.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Profile("!test")
 @Configuration
 public class RoomInitializer implements CommandLineRunner {
     private final RoomRepository roomRepository;

@@ -85,7 +85,7 @@ public class EmployeeServiceUTest {
         Employee employee = new Employee();
         when(employeeClient.getEmployeeByUserId(userId)).thenReturn(ResponseEntity.ok(employee));
 
-        Employee result = employeeService.getEmployeeById(userId);
+        Employee result = employeeService.getEmployeeByUserId(userId);
 
         assertNotNull(result);
     }

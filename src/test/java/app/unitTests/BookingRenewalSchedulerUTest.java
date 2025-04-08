@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -32,46 +34,94 @@ public class BookingRenewalSchedulerUTest {
     @InjectMocks
     private BookingRenewalScheduler bookingRenewalScheduler;
 
-    private Booking failedBooking;
+    @Test
+    void testBookingCancelledIfCheckInTomorrowAndFailedPayment() {
+        // Given
+        Booking booking = Booking.builder()
+                .id(UUID.randomUUID())
+                .checkInDate(LocalDate.now().plusDays(1))
+                .bookingStatus(BookingStatus.BOOKED)
+                .paymentStatus(PaymentStatus.FAILED)
+                .build();
 
-    @BeforeEach
-    void setUp() {
-        failedBooking = new Booking();
-        failedBooking.setCreatedAt(LocalDateTime.now().minusDays(2)); // Simulating a failed booking older than 1 day
-        failedBooking.setCheckInDate(LocalDate.now().plusDays(1));
-        failedBooking.setPaymentStatus(PaymentStatus.FAILED);
-        failedBooking.setBookingStatus(BookingStatus.BOOKED);
+        List<Booking> failedBookings = List.of(booking);
+
+        when(bookingService.getFailedPaymentStatus()).thenReturn(failedBookings);
+
+        // When
+        bookingRenewalScheduler.renewBookingStatus();
+
+        // Then
+        assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
+        verify(bookingRepository, times(1)).save(booking);
     }
 
     @Test
-    void testRenewBookingStatus_WithFailedBookings() {
-        when(bookingService.getFailedPaymentStatus()).thenReturn(Arrays.asList(failedBooking));
-        long days = 1L;
+    void testBookingNotCancelledIfCheckInIsNotTomorrow() {
+        Booking booking = Booking.builder()
+                .id(UUID.randomUUID())
+                .checkInDate(LocalDate.now().plusDays(3)) // Not tomorrow
+                .bookingStatus(BookingStatus.BOOKED)
+                .paymentStatus(PaymentStatus.FAILED)
+                .build();
+
+        when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
+
         bookingRenewalScheduler.renewBookingStatus();
 
-        assertEquals(BookingStatus.CANCELLED, failedBooking.getBookingStatus());
-        verify(bookingRepository, times(1)).save(failedBooking);
+        assertEquals(BookingStatus.BOOKED, booking.getBookingStatus()); // No change
+        verify(bookingRepository, never()).save(any());
+    }
+    @Test
+    void testAlreadyCancelledBookingIsNotTouched() {
+        Booking booking = Booking.builder()
+                .id(UUID.randomUUID())
+                .checkInDate(LocalDate.now().plusDays(1))
+                .bookingStatus(BookingStatus.CANCELLED)
+                .paymentStatus(PaymentStatus.FAILED)
+                .build();
+
+        when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
+
+        bookingRenewalScheduler.renewBookingStatus();
+
+        // Assert it wasn't modified
+        assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
+        verify(bookingRepository, never()).save(any());
     }
 
     @Test
-    void testRenewBookingStatus_NoFailedBookings() {
-        when(bookingService.getFailedPaymentStatus()).thenReturn(Collections.emptyList());
+    void testNullCheckInDateHandledGracefully() {
+        Booking booking = Booking.builder()
+                .id(UUID.randomUUID())
+                .checkInDate(null)
+                .bookingStatus(BookingStatus.BOOKED)
+                .paymentStatus(PaymentStatus.FAILED)
+                .build();
 
-        bookingRenewalScheduler.renewBookingStatus();
+        when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
 
-        verify(bookingRepository, never()).save(any(Booking.class));
+        assertDoesNotThrow(() -> bookingRenewalScheduler.renewBookingStatus());
+        verify(bookingRepository, never()).save(any());
     }
-
     @Test
-    void testRenewBookingStatus_CheckInDateDeadline() {
-        failedBooking.setCreatedAt(LocalDateTime.now());
-        failedBooking.setCheckInDate(LocalDate.now().plusDays(2));
+    void testBookingAlreadyCancelledAndPaymentCompletedIsIgnored() {
+        // Arrange
+        Booking booking = Booking.builder()
+                .id(UUID.randomUUID())
+                .checkInDate(LocalDate.now().plusDays(1))
+                .bookingStatus(BookingStatus.CANCELLED) // Already cancelled
+                .paymentStatus(PaymentStatus.COMPLETED) // Payment OK
+                .build();
 
-        when(bookingService.getFailedPaymentStatus()).thenReturn(Arrays.asList(failedBooking));
+        when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
 
+        // Act
         bookingRenewalScheduler.renewBookingStatus();
 
-        //assertEquals(BookingStatus.CANCELLED, failedBooking.getBookingStatus());
-        verify(bookingRepository, times(1)).save(failedBooking);
+        // Assert
+        assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
+        verify(bookingRepository, never()).save(any()); // Should NOT trigger a DB save
     }
 }
+

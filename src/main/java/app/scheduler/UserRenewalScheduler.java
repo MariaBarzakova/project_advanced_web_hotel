@@ -32,7 +32,7 @@ public class UserRenewalScheduler {
             return;
         }
         for (User user : users) {
-            if(user.getRole().name().equals("ADMIN")){
+            if(user.getRole().name().equals("ADMIN") || user.getRole().name().equals("EMPLOYEE")){
                 return;
             }
             LocalDateTime updatedOn = user.getUpdatedOn();

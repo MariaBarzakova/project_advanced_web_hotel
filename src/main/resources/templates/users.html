@@ -19,52 +19,42 @@
 <table class="table table-bordered table-success table-hover">
   <thead>
   <tr>
-    <th>Id</th>
-    <th>Username</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Phone Number</th>
-    <th>Email</th>
-    <th>Address</th>
-    <th>Passport</th>
-    <th>Role</th>
-    <th>Status</th>
-    <th>Created at</th>
-    <th>Updated on</th>
-    <th>Change role</th>
+    <th height="35px">User Id</th>
+    <th height="35px">Username</th>
+    <th height="35px">First Name</th>
+    <th height="35px">Last Name</th>
+    <th height="35px">Phone Number</th>
+    <th height="35px">Email</th>
+    <th height="35px">Address</th>
+    <th height="35px">Passport</th>
+    <th height="35px">Role</th>
+    <th height="35px">Status</th>
+    <th height="35px">Created at</th>
+    <th height="35px">Updated on</th>
+    <th height="35px">Change role</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="user : ${users}">
-    <td th:text="${user.id}"></td>
-    <td th:text="${user.username}"></td>
-    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.firstName))) ? 'no first name' : (#strings.capitalize(#strings.toLowerCase(user.firstName)))}"></td>
-    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.lastName))) ? 'no last name' : (#strings.capitalize(#strings.toLowerCase(user.lastName)))}"></td>
-    <td th:text="${#strings.isEmpty(user.phoneNumber) ? 'no phone number' : user.phoneNumber}"></td>
+    <td th:text="${user.id}" height="35px"></td>
+    <td th:text="${user.username}" height="35px"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.firstName))) ? 'no first name' : (#strings.capitalize(#strings.toLowerCase(user.firstName)))}" height="35px"></td>
+    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(user.lastName))) ? 'no last name' : (#strings.capitalize(#strings.toLowerCase(user.lastName)))}" height="35px"></td>
+    <td th:text="${#strings.isEmpty(user.phoneNumber) ? 'no phone number' : user.phoneNumber}" height="35px"></td>
     <td th:text="${user.email}"></td>
-    <td th:text="${#strings.isEmpty(user.address) ? 'no address' : (#strings.capitalize(#strings.toLowerCase(user.address)))}"></td>
-    <td th:text="${#strings.isEmpty(user.passport) ? 'no passport' : user.passport}"></td>
-    <td th:text="${user.role.name()}"></td>
-    <td>
+    <td th:text="${#strings.isEmpty(user.address) ? 'no address' : (#strings.capitalize(#strings.toLowerCase(user.address)))}" height="35px"></td>
+    <td th:text="${#strings.isEmpty(user.passport) ? 'no passport' : user.passport}" height="35px"></td>
+    <td th:text="${user.role.name()}" height="35px"></td>
+    <td height="35px">
       <p th:if="${user.active}">Active</p>
       <p th:unless="${user.active}">Inactive</p>
     </td>
-    <td th:text="${#temporals.format(user.createdAt, 'dd MMM YYYY HH:mm')}"></td>
-    <td th:text="${#temporals.format(user.updatedOn, 'dd MMM YYYY HH:mm')}"></td>
+    <td th:text="${#temporals.format(user.createdAt, 'dd MMM YYYY HH:mm')}" height="35px"></td>
+    <td th:text="${#temporals.format(user.updatedOn, 'dd MMM YYYY HH:mm')}" height="35px"></td>
 
-    <td>
+    <td height="35px">
       <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PUT">
-        <button class="profile-actions-button">
-          <p >Change Role</p>
-        </button>
-      </form>
-    </td>
-
-    <td>
-      <form th:action="@{'/employees/' + ${user.id}}" th:method="DELETE">
-        <button type="submit"  class="profile-actions-button">
-          <p>Delete Employee</p>
-        </button>
+        <button class="profile-actions-button"> Change Role </button>
       </form>
     </td>
   </tr>

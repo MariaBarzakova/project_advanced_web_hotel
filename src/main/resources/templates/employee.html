@@ -17,42 +17,37 @@
   </div>
 </header>
 <main>
-<table class="table table-bordered table-success table-hover">
-  <tr>
-    <th>Id</th>
-    <th>Username</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Phone Number</th>
-    <th>Email</th>
-    <th>Address</th>
-    <th>Passport</th>
-    <th>Status</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr >
-    <td th:text="${employee.userId}"></td>
-    <td th:text="${employee.username}"></td>
-    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(employee.firstName))) ? 'no first name' : (#strings.capitalize(#strings.toLowerCase(employee.firstName)))}"></td>
-    <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(employee.lastName))) ? 'no last name' : (#strings.capitalize(#strings.toLowerCase(employee.lastName)))}"></td>
-    <td th:text="${#strings.isEmpty(employee.phoneNumber) ? 'no phone number' : employee.phoneNumber}"></td>
-    <td th:text="${employee.email}"></td>
-    <td th:text="${#strings.isEmpty(employee.address) ? 'no address' : (#strings.capitalize(#strings.toLowerCase(employee.address)))}"></td>
-    <td th:text="${#strings.isEmpty(employee.passport) ? 'no passport' : employee.passport}"></td>
-    <td>
-      <p th:if="${employee.active}">Active</p>
-      <p th:unless="${employee.active}">Inactive</p>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<a th:href= "@{/home}"><button>Confirm</button></a>
-<!--<div th:if="${user.role.name()=='EMPLOYEE'}">-->
-<!--  <a th:href="@{'/users/'+${user.id} + '/profile'}">-->
-<!--    Please, enter your Personal Data-->
-<!--  </a >-->
-<!--</div>-->
+  <table class="table table-bordered table-success table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Passport</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td th:text="${employee.userId}"></td>
+        <td th:text="${employee.username}"></td>
+        <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(employee.firstName))) ? 'no first name' : (#strings.capitalize(#strings.toLowerCase(employee.firstName)))}"></td>
+        <td th:text="${#strings.isEmpty(#strings.capitalize(#strings.toLowerCase(employee.lastName))) ? 'no last name' : (#strings.capitalize(#strings.toLowerCase(employee.lastName)))}"></td>
+        <td th:text="${#strings.isEmpty(employee.phoneNumber) ? 'no phone number' : employee.phoneNumber}"></td>
+        <td th:text="${employee.email}"></td>
+        <td th:text="${#strings.isEmpty(employee.address) ? 'no address' : (#strings.capitalize(#strings.toLowerCase(employee.address)))}"></td>
+        <td th:text="${#strings.isEmpty(employee.passport) ? 'no passport' : employee.passport}"></td>
+        <td>
+          <p th:if="${employee.active}">Active</p>
+          <p th:unless="${employee.active}">Inactive</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </main>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>

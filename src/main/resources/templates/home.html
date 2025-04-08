@@ -36,19 +36,22 @@
         </nav>
     </section>
 
-    <section th:if="${user.role.name()=='ADMIN'}" class="adm">
+    <div th:if="${user.role.name()=='ADMIN'}" class="adm">
         <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/users}">All Users:</a></div>
         <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/bookings/all}">All Bookings:</a></div>
-        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/payments/allCompleted}">All Completed Payments:</a>
-        </div>
+        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/payments/allCompleted}">All Completed Payments:</a></div>
+        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/employees}">All Employees:</a> </div>
+    </div>
 
-        <div th:if="${user.role.name()=='ADMIN'}"><a th:href="@{/employees}">Employee</a></div>
+    <div class="adm">
         <div th:if="${user.role.name()=='EMPLOYEE'}">
             <a th:href="@{'/users/'+${user.id} + '/profile'}">
                 Please, enter your Personal Data
             </a>
         </div>
-    </section>
+
+        <div th:if="${user.role.name()=='EMPLOYEE'}"><a th:href="@{/employees/profile}">Employee Data</a></div>
+    </div>
 
     <section class="welcome-info">
         <h4 th:if="${user.role.name() !='EMPLOYEE'}" class="home-fields"><a th:href="@{/feedbacks/new}">Click here and
