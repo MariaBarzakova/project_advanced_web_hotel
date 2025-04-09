@@ -36,7 +36,6 @@ public class BookingRenewalSchedulerUTest {
 
     @Test
     void testBookingCancelledIfCheckInTomorrowAndFailedPayment() {
-        // Given
         Booking booking = Booking.builder()
                 .id(UUID.randomUUID())
                 .checkInDate(LocalDate.now().plusDays(1))
@@ -48,10 +47,8 @@ public class BookingRenewalSchedulerUTest {
 
         when(bookingService.getFailedPaymentStatus()).thenReturn(failedBookings);
 
-        // When
         bookingRenewalScheduler.renewBookingStatus();
 
-        // Then
         assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
         verify(bookingRepository, times(1)).save(booking);
     }
@@ -84,8 +81,6 @@ public class BookingRenewalSchedulerUTest {
         when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
 
         bookingRenewalScheduler.renewBookingStatus();
-
-        // Assert it wasn't modified
         assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
         verify(bookingRepository, never()).save(any());
     }
@@ -106,7 +101,6 @@ public class BookingRenewalSchedulerUTest {
     }
     @Test
     void testBookingAlreadyCancelledAndPaymentCompletedIsIgnored() {
-        // Arrange
         Booking booking = Booking.builder()
                 .id(UUID.randomUUID())
                 .checkInDate(LocalDate.now().plusDays(1))
@@ -116,10 +110,8 @@ public class BookingRenewalSchedulerUTest {
 
         when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
 
-        // Act
         bookingRenewalScheduler.renewBookingStatus();
 
-        // Assert
         assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
         verify(bookingRepository, never()).save(any()); // Should NOT trigger a DB save
     }

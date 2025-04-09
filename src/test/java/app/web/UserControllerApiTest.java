@@ -76,6 +76,7 @@ public class UserControllerApiTest {
         mockMvc.perform(request)
                 .andExpect(status().is3xxRedirection());
     }
+
     @Test
     void putRequestToProfile_shouldRedirectToUsers() throws Exception {
         //when(userService.editUserDetails(UUID.randomUUID(),any())).thenReturn();

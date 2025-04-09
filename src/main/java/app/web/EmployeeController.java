@@ -41,10 +41,8 @@ public class EmployeeController {
 
     @GetMapping("/profile")
     public ModelAndView getEmployeePage(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-
         Employee employee = employeeService.getEmployeeByUserId(authenticationMetadata.getUserId());
         ModelAndView modelAndView = new ModelAndView();
-
         modelAndView.addObject("employee", employee);
         modelAndView.setViewName("employee");
         return modelAndView;

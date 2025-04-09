@@ -83,7 +83,7 @@ public class UserService implements UserDetailsService {
         user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
 
-        employeeService.createEmployeeRequest(user.getId());
+        //employeeService.createEmployeeRequest(user.getId());
 
     }
 
@@ -109,6 +109,7 @@ public class UserService implements UserDetailsService {
             user.setRole(UserRole.GUEST);
             user.setActive(false);
             userRepository.save(user);
+            employeeService.createEmployeeRequest(user.getId());
         }
     }
 

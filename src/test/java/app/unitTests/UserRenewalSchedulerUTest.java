@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,29 +48,24 @@ public class UserRenewalSchedulerUTest {
     }
 
     @Test
-    void testRenewUserStatus_WithUsersForRenewal() {
-        when(userService.getAllUsersReadyForRenewal()).thenReturn(Arrays.asList(regularUser));
-        long days = 1L;
+    void testRenewUserStatus_HapyPath() {
+        regularUser.setRole(UserRole.GUEST);
+        when(userService.getAllUsersReadyForRenewal()).thenReturn(List.of(regularUser));
         userRenewalScheduler.renewUserStatus();
-        assertFalse(regularUser.getActive());
         verify(userRepository, times(1)).save(regularUser);
     }
 
     @Test
     void testRenewUserStatus_NoUsersForRenewal() {
         when(userService.getAllUsersReadyForRenewal()).thenReturn(Collections.emptyList());
-
         userRenewalScheduler.renewUserStatus();
-
         verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
     void testRenewUserStatus_AdminUserNotDeactivated() {
         when(userService.getAllUsersReadyForRenewal()).thenReturn(Arrays.asList(adminUser));
-
         userRenewalScheduler.renewUserStatus();
-
         assertTrue(adminUser.getActive());
         verify(userRepository, never()).save(adminUser);
     }

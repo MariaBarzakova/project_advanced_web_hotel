@@ -4,7 +4,6 @@ import app.room.service.RoomService;
 import app.security.AuthenticationMetadata;
 import app.user.model.UserRole;
 import app.user.service.UserService;
-import app.web.dto.EditRoomRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,8 +14,6 @@ import org.thymeleaf.exceptions.TemplateProcessingException;
 
 import java.util.UUID;
 
-import static app.TestBuilder.aRandomUser;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;

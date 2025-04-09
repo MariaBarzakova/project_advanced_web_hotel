@@ -138,7 +138,7 @@ public class UserServiceUTest {
 
     @Test
     void testLoadUserByUsername_UserNotFound() {
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(any())).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> userService.loadUserByUsername("nonExistentUser"));
     }
@@ -171,12 +171,13 @@ public class UserServiceUTest {
     }
 
     @Test
-    void testAllSetNoActiveUsers_AllExists() {
+    void testAllNoActiveUsers_AllExists() {
         List<User> userList = List.of(new User(), new User());
         when(userRepository.findAllByActiveIsTrue()).thenReturn(userList);
         List<User> users = userService.getAllUsersReadyForRenewal();
         assertThat(users).hasSize(2);
     }
+
     @Test
     void testRegisterUser_FirstUserBecomesAdmin() {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
@@ -209,6 +210,6 @@ public class UserServiceUTest {
         assertEquals("AB123", user.getPassport());
         assertTrue(user.getActive());
         verify(userRepository, times(1)).save(user);
-        verify(employeeService, times(1)).createEmployeeRequest(user.getId());
+
     }
 }

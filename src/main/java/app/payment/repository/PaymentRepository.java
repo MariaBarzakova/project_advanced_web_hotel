@@ -16,6 +16,5 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
 
     Optional<Payment> findByBookingId(UUID id);
 
-
 }
 

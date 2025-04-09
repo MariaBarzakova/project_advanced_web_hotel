@@ -31,9 +31,10 @@ public class UserRenewalScheduler {
             log.info("No User found for renewal");
             return;
         }
+
         for (User user : users) {
             if(user.getRole().name().equals("ADMIN") || user.getRole().name().equals("EMPLOYEE")){
-                return;
+                continue;
             }
             LocalDateTime updatedOn = user.getUpdatedOn();
             long days = ChronoUnit.DAYS.between(updatedOn, LocalDateTime.now());

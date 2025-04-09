@@ -3,6 +3,7 @@ package app.web.dto;
 import app.booking.model.BookingStatus;
 import app.payment.model.PaymentStatus;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -24,3 +25,4 @@ public class BookingRequest {
     @NotNull
     private BookingStatus bookingStatus;
 }
+
