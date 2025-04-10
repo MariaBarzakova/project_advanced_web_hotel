@@ -37,7 +37,7 @@ public class UserRenewalSchedulerUTest {
     @BeforeEach
     void setUp() {
         regularUser = new User();
-        regularUser.setUpdatedOn(LocalDateTime.now().minusDays(2)); // User last updated more than 1 day ago
+        regularUser.setUpdatedOn(LocalDateTime.now().minusDays(2));
         regularUser.setActive(true);
         regularUser.setRole(UserRole.EMPLOYEE);
 

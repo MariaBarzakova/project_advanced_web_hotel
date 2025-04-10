@@ -1,5 +1,6 @@
 package app.web;
 
+import app.feedback.model.Feedback;
 import app.feedback.service.FeedbackService;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
@@ -15,6 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.eq;
@@ -44,11 +46,11 @@ public class FeedbackControllerApiTest {
     @BeforeEach
     void setup() {
         userId = UUID.randomUUID();
-        principal = new AuthenticationMetadata(userId, "john", "12345", UserRole.ADMIN);
+        principal = new AuthenticationMetadata(userId, "maria", "1234", UserRole.ADMIN);
 
         mockUser = new User();
         mockUser.setId(userId);
-        mockUser.setUsername("john");
+        mockUser.setUsername("j");
     }
 
     @Test
@@ -68,9 +70,9 @@ public class FeedbackControllerApiTest {
         mockMvc.perform(post("/feedbacks/new")
                         .with(authentication(new TestingAuthenticationToken(principal, null, "ROLE_ADMIN")))
                         .with(csrf())
-                        .param("firstName", "John")
-                        .param("lastName", "Smith")
-                        .param("message", "Great job!"))
+                        .param("firstName", "J")
+                        .param("lastName", "S")
+                        .param("message", "ok"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/home"));
 

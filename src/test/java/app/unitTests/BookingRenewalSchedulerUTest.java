@@ -104,8 +104,8 @@ public class BookingRenewalSchedulerUTest {
         Booking booking = Booking.builder()
                 .id(UUID.randomUUID())
                 .checkInDate(LocalDate.now().plusDays(1))
-                .bookingStatus(BookingStatus.CANCELLED) // Already cancelled
-                .paymentStatus(PaymentStatus.COMPLETED) // Payment OK
+                .bookingStatus(BookingStatus.CANCELLED)
+                .paymentStatus(PaymentStatus.COMPLETED)
                 .build();
 
         when(bookingService.getFailedPaymentStatus()).thenReturn(List.of(booking));
@@ -113,7 +113,7 @@ public class BookingRenewalSchedulerUTest {
         bookingRenewalScheduler.renewBookingStatus();
 
         assertEquals(BookingStatus.CANCELLED, booking.getBookingStatus());
-        verify(bookingRepository, never()).save(any()); // Should NOT trigger a DB save
+        verify(bookingRepository, never()).save(any());
     }
 }
 

@@ -45,7 +45,7 @@ public class PaymentServiceUTest {
 
     @Test
     void testGetAllPaymentsByBookingStatus() {
-        List<Payment> payments = Arrays.asList(payment2, payment1); // Unsorted list
+        List<Payment> payments = Arrays.asList(payment2, payment1);
         when(paymentRepository.findAllByBooking_PaymentStatus(PaymentStatus.COMPLETED)).thenReturn(payments);
 
         List<Payment> result = paymentService.getAllPaymentsByBookingStatus();

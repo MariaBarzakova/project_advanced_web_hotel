@@ -5,12 +5,20 @@ import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.repository.UserRepository;
 import app.user.service.UserService;
+import app.web.dto.UserEditRequest;
+import app.web.mapper.DtoMapper;
+import jakarta.validation.Valid;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.UUID;
@@ -78,7 +86,7 @@ public class UserControllerApiTest {
     }
 
     @Test
-    void putRequestToProfile_shouldRedirectToUsers() throws Exception {
+    void putRequestToProfile_shouldRedirectToRooms() throws Exception {
         //when(userService.editUserDetails(UUID.randomUUID(),any())).thenReturn();
         MockHttpServletRequestBuilder request = put("/users/{id}/profile", UUID.randomUUID())
                 .formField("firstName","")
@@ -91,20 +99,49 @@ public class UserControllerApiTest {
 
         mockMvc.perform(request)
                 .andExpect(status().is3xxRedirection());
+    }
 
+    @Test
+    void getUserProfile_shouldReturnGuestProfileViewWithUserData() throws Exception {
+        UUID userId = UUID.randomUUID();
+        User user = aRandomUser();
+        when(userService.getUserById(userId)).thenReturn(user);
+
+        AuthenticationMetadata principal = new AuthenticationMetadata(
+                UUID.randomUUID(), "megi", "1234", UserRole.GUEST);
+
+        mockMvc.perform(get("/users/{id}/profile", userId)
+                        .with(user(principal)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("guest-profile"))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeExists("userEditRequest"));
+    }
+    
+
+    @Test
+    void putInvalidUserProfileUpdate_shouldReturnGuestProfileView() throws Exception {
+        UUID userId = UUID.randomUUID();
+        User user = aRandomUser();
+        AuthenticationMetadata principal = new AuthenticationMetadata(
+                UUID.randomUUID(), "megi", "password", UserRole.GUEST
+        );
+        when(userService.getUserById(userId)).thenReturn(user);
+
+        MockHttpServletRequestBuilder request = put("/users/{id}/profile", userId)
+                .with(user(principal))
+                .param("firstName", "") // empty = invalid
+                .param("lastName", "D")
+                .param("phoneNumber", "")
+                .param("address", "")
+                .param("passport", "")
+                .param("active", "true")
+                .with(csrf());
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(view().name("guest-profile"))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeExists("userEditRequest"));
     }
 }
-//@PutMapping("/{id}/profile")
-//    public ModelAndView updateUserProfile(@PathVariable UUID id, @Valid UserEditRequest userEditRequest,
-//                                          BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            User user = userService.getUserById(id);
-//            ModelAndView modelAndView = new ModelAndView();
-//            modelAndView.setViewName("guest-profile");
-//            modelAndView.addObject("user", user);
-//            modelAndView.addObject("userEditRequest", userEditRequest);
-//            return modelAndView;
-//        }
-//        userService.editUserDetails(id, userEditRequest);
-//        return new ModelAndView("redirect:/rooms");
-//    }

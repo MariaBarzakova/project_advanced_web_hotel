@@ -59,7 +59,7 @@
 
         <h4 th:if="${user.role.name() !='EMPLOYEE'}" class="home-fields"><a th:href="@{/feedbacks/all}">Click here to see.
             Our travelers give their opinion:</a></h4>
-        <table th:if="${user.role.name() =='GUEST'}" class="table table-bordered">
+        <table th:if="${user.role.name() !='EMPLOYEE'}" class="table table-bordered">
             <thead>
             <tr>
                 <th height="35px">First Name:</th>
